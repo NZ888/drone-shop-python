@@ -1,0 +1,48 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+header{
+    position: relative;
+    display: flex;
+    padding-top: 7vh;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    height: 100vh;
+    background-color: #CDD5DD;
+}
+
+nav{
+    display: flex;
+    width: 90vw;
+    height: 7vh;
+    justify-content: space-between;
+    background-color: #FFFFFF80;
+    align-items: center;
+    padding: 10px 40px 10px 40px;
+    border-radius: 62px;
+    border: 1px solid #E4E4E7;
+}
+.navigation{
+    display: flex;
+    justify-content: space-between;
+    width: 20vw;
+    gap: 33px;
+}
+.navigation a {
+    text-decoration: none;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #0C122A;
+}
+.auth{
+    display: flex;
+    gap: 24px;
+    width: 20vw;
+    padding: 10px;
+    align-items: center;
+    justify-content: end;
+}

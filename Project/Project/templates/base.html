@@ -1,0 +1,70 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}{% endblock title %}</title>
+        {% block links %}{% endblock links %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+    </head>
+    <body>
+        <header>
+            <nav>
+                <div class="navigation">
+                    <a href="">Каталог</a>
+                    <a href="">Про нас</a>
+                    <a href="">Контакти</a>
+                </div>
+
+                <a href="/">
+                    <img src="{{ url_for('static', filename='images/Logo.svg') }}" alt="logo">
+                </a>
+
+                <div class="auth">
+                    <a href="/cart">
+                        <img src="{{ url_for('static', filename='images/bag.png') }}" alt="cart">
+                    </a>
+                    <a href="/register">
+                        <img src="{{ url_for('static', filename='images/user.svg') }}" alt="user">
+                    </a>
+                </div>
+            </nav>
+            {% block header %}
+                
+            {% endblock %}
+        </header>
+
+        <main>
+            {% block content %}
+                
+            {% endblock %}
+        </main>
+
+        <footer>
+            {% block footer %}
+                <div class="elipse">
+                    <div class="info">
+                        <div class="detail-info">
+                            <p class="bold-text">1к+</p>
+                            <p>Успішних відправок</p>
+                        </div>
+                        <div class="detail-info">
+                            <p class="bold-text">1.5к+</p>
+                            <p>Задоволених клієнтів</p>
+                        </div>
+                        <div class="detail-info">
+                            <p class="bold-text">24/7</p>
+                            <p>Підтримка клієнтів</p>
+                        </div>
+                    </div>
+                </div>
+                <img src="{{ url_for('static', filename='images/footer_logo.png') }}" alt="footer logo">
+                <div>
+                    <a href="">Каталог</a>
+                </div>
+                <hr>
+            {% endblock %}
+            <p>© 2025 Drones Всі права захищені.</p>
+        </footer>
+    </body>
+</html>

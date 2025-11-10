@@ -1,0 +1,63 @@
+.big-header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* background-color: #CDD5DD;
+    width: 100vw; */
+}
+.text{
+    position: relative;
+    display: flex;
+    color: rgb(255, 255, 255);
+    text-align: center;
+}
+
+.text p{
+    font-weight: 900;
+    font-size: 61px;
+    font-style: bold;
+    text-transform: uppercase;
+}
+
+.image{
+    position: absolute;
+    transform: rotate(11deg);
+    top: 130px;
+}
+
+.promo{
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 31px;
+    top: 700px;
+    right: 150px;
+}
+
+
+.promo p{
+    font-weight: 400;
+    font-size: 16px;
+    color: black;
+}
+
+.custom-button{
+    border-radius: 100px;
+    padding: 18px 40px 18px 40px;
+    /* width: 188px;
+    height: 52px; */
+    background-color: #0C122A;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+}
+
+.elipse1{
+    width: 120vw;
+    height: 90vh;
+    background-color: white;
+    border-radius: 50%;
+    overflow: hidden;
+}
