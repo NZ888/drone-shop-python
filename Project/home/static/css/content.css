@@ -1,0 +1,119 @@
+:root {
+	--alert: #b62d11;
+	--success: #4dbc4b;
+	--blue-100: #0c122a;
+	--secondary-100: #cdd5dd;
+	--white-100: #fff;
+	--blue-80: #3d4155;
+	--blue-60: #6d717f;
+	--blue-40: #9ea0aa;
+	--blue-20: #ced0d4;
+	--blue-10: #e7e7ea;
+	--secondary-40: #f4f4f4;
+	--alert-50: rgba(182, 45, 17, 0.5);
+}
+
+.about-us-container{
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 170px;
+}
+.about-us-container h2{
+    font-weight: 900;
+    font-size: 44px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--secondary-100);
+}
+.about-us-container p{
+    font-weight: 400;
+    font-size: 16px;
+    text-align: center;
+    color: var(--blue-100);
+}
+.about-us-container button{
+    border: 1.50px solid var(--blue-100);
+    border-radius: 100px;
+    padding: 18px 40px;
+
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--blue-100);
+}
+.new-in-store{
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.new-in-store p {
+    font-weight: 900;
+    font-size: 44px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--secondary-100);
+    margin-bottom: 48px;
+}
+
+.catalog-container{
+     width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.catalog-container p{
+    font-weight: 900;
+    font-size: 44px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--secondary-100);
+    margin-bottom: 48px;
+}
+.catalog-container button{
+    border-radius: 100px;
+    padding: 18px 40px;
+    background: var(--blue-100);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--white-100);
+}
+.items-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+}
+
+.item{
+
+}
+.price{
+    display: flex;
+    gap: 5px;
+}
+
+.old-price{
+font-weight: 500;
+font-size: 14px;
+text-decoration: line-through;
+color: var(--blue-100);
+}
+
+.new-price{
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--alert);
+}
