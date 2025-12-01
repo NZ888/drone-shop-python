@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block links %}
+    
+{% endblock %}
+
+{% block header %}
+    
+{% endblock %}
+
+{% block content %}
+    <div>
+        <form action="" method="post">
+            <p>Ім'я</p>
+            <input type="text" name="username" required minlength="3" placeholder="Введіть ім'я">
+            <p>Пароль</p>
+            <input type="password" name="password" required minlength="8" placeholder="Введіть пароль">
+            <button type="submit">Авторизуватись</button>
+        </form>
+    </div>
+
+{% endblock %}

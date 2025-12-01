@@ -13,7 +13,24 @@
 {% endblock %}
 
 {% block content %}
-    <button>Register</button>
+    <div>
+        <form action="" method="post">
+            <p>Ім'я</p>
+            <input type="text" placeholder="Enter your username" name="username" required minlength="3">
+            <p>Email</p>
+            <input type="email" placeholder="Enter your Email" name="email" required>
+            <p>Пароль</p>
+            <input type="password" placeholder="Enter your password" name="password" required minlength="8">
+            <p>Підтвердження пароля</p>
+            <input type="password" placeholder="Confirm your password" name="confirm_password" required>
+            <button type="submit">Send</button>
+        </form>
+        {% if message %}
+            <p>{{message}}</p>
+        {%endif%}
+        <a href="/login">Авторизуватись</a>
+    </div>
+
 {% endblock %}
 
 {% block footer %}

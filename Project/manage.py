@@ -2,6 +2,7 @@ import Project
 
 def main():
     try:
+        Project.execute()
         Project.project.run(debug= True, port= 8000)
     except Exception as error:
         print(error)
