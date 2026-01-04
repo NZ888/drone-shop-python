@@ -1,21 +1,77 @@
 {% extends 'base.html' %}
 
-{% block title %}
-    Registration
-{% endblock %}
+{% block title %}Авторизація / Реєстрація{% endblock %}
 
 {% block links %}
-    <link rel="stylesheet" href="">
+<link rel="stylesheet" href="{{ url_for('user.static', filename='css/auth.css') }}">
+<script defer src="{{ url_for('user.static', filename='js/auth.js') }}"></script>
 {% endblock links %}
 
-{% block header %}
-    
-{% endblock %}
+{% block header %}{% endblock %}
 
 {% block content %}
-    <button>Register</button>
+<div class="auth-backdrop" id="auth-backdrop" data-default-tab="{{ default_tab|default('register') }}">
+    <div class="auth-modal" id="auth-modal">
+        <div class="modal-header">
+            <div class="tabs">
+                <button class="tab active" data-target="register-form">Реєстрація</button>
+                <button class="tab" data-target="login-form">Авторизація</button>
+            </div>
+            <button class="close" id="modal-close">×</button>
+        </div>
+        <p class="modal-subtitle">Введіть дані, щоб створити акаунт або увійти</p>
+
+        <form id="register-form" class="form active" method="post" action="{{ url_for('user.render_register') }}">
+            <label>Ім'я</label>
+            <input type="text" name="username" placeholder="Введіть ім'я" required>
+            <label>Email</label>
+            <input type="email" name="email" placeholder="Введіть email" required>
+            <label>Пароль</label>
+            <div class="password-field">
+                <input type="password" name="password" placeholder="Введіть пароль" required>
+            </div>
+            <label>Підтвердження пароля</label>
+            <div class="password-field">
+                <input type="password" name="confirm_password" placeholder="Повторіть пароль" required>
+            </div>
+            <p class="policy">При вході або реєстрації, я підтверджую згоду з умовами публічного договору</p>
+            <div class="actions">
+                <button type="button" class="secondary" data-action="cancel">Скасувати</button>
+                <button type="submit" class="primary">Зареєструватися</button>
+            </div>
+        </form>
+
+        <form id="login-form" class="form" method="post" action="{{ url_for('user.render_login') }}">
+            <label>Ім'я</label>
+            <input type="text" name="username" placeholder="Введіть логін" required>
+            <label>Пароль</label>
+            <div class="password-field">
+                <input type="password" name="password" placeholder="Введіть пароль" required>
+            </div>
+            <div class="actions">
+                <button type="button" class="secondary" data-action="cancel">Скасувати</button>
+                <button type="submit" class="primary">Увійти</button>
+            </div>
+        </form>
+
+        <p class="message {% if message_type %}{{ message_type }}{% endif %}" id="form-message">{{ message }}</p>
+    </div>
+</div>
+
+<div class="auth-backdrop success" id="success-modal">
+    <div class="auth-modal">
+        <div class="modal-header">
+            <h3>Реєстрація</h3>
+            <button class="close" data-action="dismiss-success">×</button>
+        </div>
+        <p class="modal-subtitle">Код підтвердження відправлено на вашу пошту.</p>
+        <p class="message" id="success-hint"></p>
+        <div class="actions">
+            <a class="primary" id="go-site" href="/">Перейти на сайт</a>
+            <a class="secondary" id="open-confirm" href="{{ url_for('user.render_verify') }}">Підтвердити код</a>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
-{% block footer %}
-    
-{% endblock %}
+{% block footer %}{% endblock %}

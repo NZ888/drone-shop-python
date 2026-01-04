@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Підтвердження пошти{% endblock %}
+
+{% block links %}
+<link rel="stylesheet" href="{{ url_for('user.static', filename='css/auth.css') }}">
+{% endblock links %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+<div class="confirm-wrapper">
+    <div class="confirm-card">
+        {% if confirmed %}
+            <h2>Пошта підтверджена</h2>
+            <p>Дякуємо, {{ email }} тепер активовано. Можете входити у свій акаунт.</p>
+            <a class="primary" href="/register">До авторизації</a>
+        {% else %}
+            <h2>Не вдалося підтвердити</h2>
+            <p>{{ reason }}</p>
+            <a class="secondary" href="/register">Спробувати ще раз</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}{% endblock %}

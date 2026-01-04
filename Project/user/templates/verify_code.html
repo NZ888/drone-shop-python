@@ -1,0 +1,41 @@
++38
+-0
+
+{% extends 'base.html' %}
+
+{% block title %}Підтвердження пошти{% endblock %}
+
+{% block links %}
+<link rel="stylesheet" href="{{ url_for('user.static', filename='css/auth.css') }}">
+<script defer src="{{ url_for('user.static', filename='js/verify.js') }}"></script>
+{% endblock links %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+<div class="confirm-wrapper">
+    <div class="confirm-card">
+        <h2>Перевірте пошту</h2>
+        <p>Ми надіслали код підтвердження. Введіть його нижче, щоб завершити реєстрацію.</p>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <p class="message success">{{ messages[0] }}</p>
+        {% endif %}
+        {% endwith %}
+        <form id="verify-form" class="code-form" method="post" action="{{ url_for('user.render_verify') }}">
+            <div class="code-inputs">
+                {% for i in range(6) %}
+                <input type="text" name="code{{ i }}" maxlength="1" inputmode="numeric" required>
+                {% endfor %}
+            </div>
+            <p class="message {% if message_type %}{{ message_type }}{% endif %}" id="verify-message">{{ message }}</p>
+            <div class="actions">
+                <button type="submit" class="primary">Підтвердити</button>
+                <a class="secondary" href="{{ url_for('user.render_register') }}">Змінити дані</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}{% endblock %}
