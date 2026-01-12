@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Catalog
+{% endblock %}
+
+{% block links %}
+    <link rel="stylesheet" href="{{url_for('catalog.static', filename='css/modal.css')}}">
+{% endblock %}
+
+
+{% block content %}
+    <button id="openModal">Додати продукт</button>
+    <div id="modal">
+        <button id="closeModal">x</button>
+        <form action="" method="post">
+            <input type="text" name="name" placeholder="Введіть назву">
+            <input type="text" name="price" placeholder="Введіть ціну">
+            <input type="text" name="old_price" placeholder="Введіть стару ціну, якщо є">
+            <input type="text" name="image_url" placeholder="Введіть лінк на картинку">
+            <input type="text" name="category" placeholder="Введіть категорію">
+            <textarea name="description" placeholder="Введіть опис"></textarea>
+            <button type="submit">Створити</button>
+        </form>
+    </div>
+    {% if products %}
+        {% for product in products %}
+            <div>
+                <h1>{{product.name}}</h1>
+                <img src="{{product.image_url}}" alt="">
+                <p>{{product.description}}</p>
+                <a href="/delete?id={{product.id}}">Видалити</a>
+            </div>
+        {% endfor %}    
+    {% endif %}
+    {% if pagination.has_prev %}
+        <a href="?page={{pagination.prev_num}}">
+            <img src="{{ url_for('catalog.static', filename='images/prev.png') }}" alt="prev">
+        </a>
+    {% endif %}
+    
+    {% for page in range(1, pagination.pages + 1) %}
+        <a href="?page={{page}}">{{page}}</a>
+    {% endfor %}
+
+    {% if pagination.has_next %}
+        <a href="?page={{pagination.next_num}}">
+            <img src="{{ url_for('catalog.static', filename='images/next.png') }}" alt="next">
+        </a>
+    {% endif %}
+    <script src="{{ url_for('catalog.static', filename='js/modal.js') }}"></script>
+{% endblock %}
