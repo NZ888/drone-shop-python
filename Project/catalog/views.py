@@ -4,7 +4,7 @@ from .models import Product
 from flask import request
 from Project.db import DATA_BASE
 import flask_login
-
+import os
 
 def render_catalog():
     page = request.args.get("page", 1, type= int)
@@ -19,11 +19,13 @@ def render_admin():
             name = flask.request.form["name"]
             product = Product.query.filter_by(name= name).first()
             if not product:
+                image = flask.request.files["image"]
+                image.save(os.path.abspath(os.path.join(__file__, "..", "static", "media", f"{image.filename}")))
                 product = Product(
                     name= name, 
                     price = flask.request.form["price"],
                     old_price = flask.request.form["old_price"],
-                    image_url = flask.request.form["image_url"],
+                    image_url = image.filename,
                     category = flask.request.form["category"],
                     description = flask.request.form["description"]
                 )
@@ -40,3 +42,25 @@ def delete_product():
         DATA_BASE.session.commit()
     return flask.redirect("/admin/")
 
+def add_to_cart():
+    id = request.args.get("id")
+    id_list = flask.request.cookies.get("id_list")
+    response = flask.make_response(flask.redirect("/catalog/"))
+    if not id_list:
+        response.set_cookie(key="id_list", value=id)
+    else:
+        id_list += "|" + id
+        response.set_cookie(key="id_list", value=id_list)
+    return response
+
+
+
+def render_cart():
+    product_list = []
+    cookies_id = flask.request.cookies.get("id_list")
+    if cookies_id:
+        id_list = cookies_id.split(sep="|")
+        for id in id_list:
+            product = Product.query.get(id)
+            product_list.append(product)
+    return flask.render_template("cart.html", products_list = product_list)

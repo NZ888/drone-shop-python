@@ -35,3 +35,11 @@ catalog.catalog.add_url_rule(
     rule="/delete/",
     view_func= catalog.delete_product
 )
+catalog.catalog.add_url_rule(
+    rule="/add-to-cart/",
+    view_func= catalog.add_to_cart
+)
+catalog.catalog.add_url_rule(
+    rule="/cart/",
+    view_func= catalog.render_cart
+)
