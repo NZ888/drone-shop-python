@@ -11,6 +11,7 @@
 
 {% block content %}
     {% if products_list %}
+        <p>Count: <span id="count"></span></p>
         {% for product in products_list %}
             <div>
                 <h1>{{product.name}}</h1>
@@ -22,5 +23,5 @@
         {% endfor %}    
     {% endif %}
     
-    
+    <script src="{{ url_for('catalog.static', filename='js/countProducts.js')}}"></script>
 {% endblock %}

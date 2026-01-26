@@ -43,14 +43,17 @@ def delete_product():
     return flask.redirect("/admin/")
 
 def add_to_cart():
-    id = request.args.get("id")
+    product_id = request.json.get("product_id")
     id_list = flask.request.cookies.get("id_list")
-    response = flask.make_response(flask.redirect("/catalog/"))
     if not id_list:
-        response.set_cookie(key="id_list", value=id)
+        new_id_list = product_id
     else:
-        id_list += "|" + id
-        response.set_cookie(key="id_list", value=id_list)
+        new_id_list = id_list + "|" + product_id
+    response = flask.make_response(flask.jsonify({
+        "status": "succes",
+        "productsCount": len(new_id_list.split(sep="|"))
+    }))
+    response.set_cookie(key="id_list", value=new_id_list)    
     return response
 
 
@@ -64,3 +67,17 @@ def render_cart():
             product = Product.query.get(id)
             product_list.append(product)
     return flask.render_template("cart.html", products_list = product_list)
+
+
+def count_products():
+    id = flask.request.cookies.get("id_list")
+    if id:
+        id_list = id.split(sep="|")
+    else:
+        id_list=[]
+    response = flask.make_response(flask.jsonify({
+        "status": "succes",
+        "productsCount": len(id_list)
+    }))
+
+    return response
