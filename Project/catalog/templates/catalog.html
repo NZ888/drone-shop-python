@@ -17,7 +17,7 @@
                 <img src="{{ url_for('catalog.static', filename='media/' + product.image_url) }}" alt="">
                 <p>{{product.description}}</p>
                 <button id="addButton" value="{{product.id}}">+</button>
-                <a href="">-</a>
+                <button id="deleteButton" value="{{product.id}}">-</button>
             </div>
         {% endfor %}    
     {% endif %}
@@ -37,5 +37,5 @@
         </a>
     {% endif %}
     
-    <script src="{{ url_for('catalog.static', filename='js/cart.js')}}"></script>
+    <script src="{{ url_for('catalog.static', filename='js/cart.js')}}" deffer></script>
 {% endblock %}

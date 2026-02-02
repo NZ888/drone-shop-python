@@ -48,3 +48,8 @@ catalog.catalog.add_url_rule(
     rule="/count_products/",
     view_func= catalog.count_products
 )
+catalog.catalog.add_url_rule(
+    rule="/delete_in_cart/",
+    view_func= catalog.delete_product_in_cart,
+    methods=['GET', 'POST']
+)

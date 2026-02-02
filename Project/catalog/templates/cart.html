@@ -12,16 +12,17 @@
 {% block content %}
     {% if products_list %}
         <p>Count: <span id="count"></span></p>
-        {% for product in products_list %}
+        {% for product_object in products_list %}
             <div>
-                <h1>{{product.name}}</h1>
-                <img src="{{ url_for('catalog.static', filename='media/' + product.image_url) }}" alt="">
-                <p>{{product.description}}</p>
-                <a href="/add-to-cart/?id={{product.id}}">+</a>
-                <a href="">-</a>
+                <h1>{{product_object.product.name}}</h1>
+                <img src="{{ url_for('catalog.static', filename='media/' + product_object.product.image_url) }}" alt="">
+                <p>{{product_object.product.description}}</p>
+                <span>{{product_object.count}}</span>
+                <button id="addButton" value="{{product_object.product.id}}">+</button>
+                <button id="deleteButton" value="{{product_object.product.id}}">-</button>
             </div>
         {% endfor %}    
     {% endif %}
     
-    <script src="{{ url_for('catalog.static', filename='js/countProducts.js')}}"></script>
+    <script src="{{ url_for('catalog.static', filename='js/cart.js')}}"></script>
 {% endblock %}
