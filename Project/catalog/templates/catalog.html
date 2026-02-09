@@ -12,12 +12,12 @@
 {% block content %}
     {% if products %}
         {% for product in products %}
-            <div>
+            <div class="product_container">
                 <h1>{{product.name}}</h1>
                 <img src="{{ url_for('catalog.static', filename='media/' + product.image_url) }}" alt="">
                 <p>{{product.description}}</p>
-                <button id="addButton" value="{{product.id}}">+</button>
-                <button id="deleteButton" value="{{product.id}}">-</button>
+                <button class="addButton" value="{{product.id}}">+</button>
+                <button class="deleteButton" value="{{product.id}}">-</button>
             </div>
         {% endfor %}    
     {% endif %}
@@ -37,5 +37,5 @@
         </a>
     {% endif %}
     
-    <script src="{{ url_for('catalog.static', filename='js/cart.js')}}" deffer></script>
+    <script src="{{ url_for('cart.static', filename='js/countProducts.js')}}" deffer type="module"></script>
 {% endblock %}

@@ -94,9 +94,10 @@ def delete_product_in_cart():
     id_list = flask.request.cookies.get("id_list").split(sep="|")
     id_list.remove(product_id)
     new_id_list = "|".join(id_list)
+    finall_product_list = new_id_list.count(product_id)
     response = flask.make_response(flask.jsonify({
         "status" : "succes",
-        "productsCount": len(id_list)
+        "productsCount": finall_product_list
     }))
     if new_id_list:
         response.set_cookie(key="id_list", value=new_id_list)
