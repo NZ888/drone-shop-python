@@ -1,5 +1,4 @@
-import user, home, catalog
-
+import cart, catalog, home, user
 
 home.home.add_url_rule(
     rule= '/',
@@ -35,21 +34,21 @@ catalog.catalog.add_url_rule(
     rule="/delete/",
     view_func= catalog.delete_product
 )
-catalog.catalog.add_url_rule(
+cart.cart.add_url_rule(
     rule="/add-to-cart/",
-    view_func= catalog.add_to_cart,
+    view_func= cart.add_to_cart,
     methods=['GET', 'POST']
 )
-catalog.catalog.add_url_rule(
+cart.cart.add_url_rule(
     rule="/cart/",
-    view_func= catalog.render_cart
+    view_func= cart.render_cart
 )
-catalog.catalog.add_url_rule(
+cart.cart.add_url_rule(
     rule="/count_products/",
-    view_func= catalog.count_products
+    view_func= cart.count_products
 )
-catalog.catalog.add_url_rule(
+cart.cart.add_url_rule(
     rule="/delete_in_cart/",
-    view_func= catalog.delete_product_in_cart,
+    view_func= cart.delete_product_in_cart,
     methods=['GET', 'POST']
 )
