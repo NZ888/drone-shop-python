@@ -40,6 +40,10 @@ cart.cart.add_url_rule(
     methods=['GET', 'POST']
 )
 cart.cart.add_url_rule(
+    rule="/cart-modal/",
+    view_func= cart.render_cart_modal
+)
+cart.cart.add_url_rule(
     rule="/cart/",
     view_func= cart.render_cart
 )

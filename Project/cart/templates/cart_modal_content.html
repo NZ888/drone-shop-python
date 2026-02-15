@@ -1,0 +1,15 @@
+{% if products_list %}
+    <p class="cart-modal-count">Товарів: <span id="count"></span></p>
+    {% for product_object in products_list %}
+        <div class="cart-modal-product">
+            <p class="cart-modal-name">{{product_object.product.name}}</p>
+            <span class="renderCount">{{product_object.count}}</span>
+            <div class="cart-modal-controls">
+                <button class="addButton" value="{{product_object.product.id}}">+</button>
+                <button class="deleteButton" value="{{product_object.product.id}}">-</button>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <p class="cart-modal-empty">Кошик порожній</p>
+{% endif %}

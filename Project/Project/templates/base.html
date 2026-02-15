@@ -6,12 +6,13 @@
         {% block links %}{% endblock links %}
         <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+        <link rel="stylesheet" href="{{ url_for('cart.static', filename='css/cart-modal.css') }}">
     </head>
     <body>
         <header>
             <nav>
                 <div class="navigation">
-                    <a href="">Каталог</a>
+                    <a href="/catalog">Каталог</a>
                     <a href="">Про нас</a>
                     <a href="">Контакти</a>
                 </div>
@@ -21,9 +22,12 @@
                 </a>
 
                 <div class="auth">
-                    <a href="/cart">
+                    <a id="cartLink" href="/cart">
                         <img src="{{ url_for('static', filename='images/bag.png') }}" alt="cart">
                     </a>
+                    <div id="cartModal" class="cart-modal">
+                        <div id="cartModalBody" class="cart-modal-body"></div>
+                    </div>
                     <a href="/register">
                         <img src="{{ url_for('static', filename='images/user.svg') }}" alt="user">
                     </a>
@@ -66,5 +70,6 @@
             {% endblock %}
             <p>© 2025 Drones Всі права захищені.</p>
         </footer>
+        <script src="{{ url_for('cart.static', filename='js/cartModal.js') }}"></script>
     </body>
 </html>

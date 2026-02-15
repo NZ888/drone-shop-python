@@ -23,8 +23,7 @@ def add_to_cart():
     response.set_cookie(key="id_list", value=new_id_list)
     return response
 
-
-def render_cart():
+def get_cart_products():
     product_list = []
     cookies_id = flask.request.cookies.get("id_list")
 
@@ -39,8 +38,16 @@ def render_cart():
                 "count": id_list.count(product_id),
             })
 
+    return product_list
+
+
+def render_cart():
+    product_list = get_cart_products()
     return flask.render_template("cart.html", products_list=product_list)
 
+def render_cart_modal():
+    product_list = get_cart_products()
+    return flask.render_template("cart_modal_content.html", products_list=product_list)
 
 def count_products():
     product_ids = flask.request.cookies.get("id_list")

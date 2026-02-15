@@ -1,0 +1,45 @@
+.auth {
+    position: relative;
+}
+
+.cart-modal {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 58px;
+    width: 280px;
+    max-height: 320px;
+    overflow-y: auto;
+    background: #FFFFFF;
+    border: 1px solid #E4E4E7;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    z-index: 50;
+    padding: 12px;
+}
+
+.cart-modal.open {
+    display: block;
+}
+
+.cart-modal-product {
+    border-bottom: 1px solid #E4E4E7;
+    padding: 8px 0;
+}
+
+.cart-modal-name {
+    margin: 0 0 6px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.cart-modal-controls {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.cart-modal-empty,
+.cart-modal-count {
+    margin: 0 0 8px;
+}
