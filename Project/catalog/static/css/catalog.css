@@ -1,0 +1,49 @@
+#filter_products{
+    margin-left: 39px;
+    margin-right: 39px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+    gap: 58px;
+}
+
+.product{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.product a{
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 24px;
+    color: var(--blue-100);
+    text-decoration: none;
+}
+.buttons button{
+    border: 1px solid #0c122a;
+    border-radius: 100px;
+    padding: 12px 16px;
+    width: auto;
+    height: 41px;
+}
+
+.buttons{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.paginationBtn{
+    border-radius: 100px;
+    padding: 10px 12px;
+    width: 40px;
+    height: 40px;
+    background:#f4f4f4;
+    border-color: transparent;
+}

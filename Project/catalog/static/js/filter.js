@@ -31,13 +31,16 @@ async function filterProducts(page) {
     let html = ``
     data.filtrated_products.forEach(product => {
         html += `
+            <div class="product">
                 <a href="/catalog/${product.id}" class="product_container">
                     <h1>${product.name}</h1>
                     <img src="/catalog/static/media/${product.image_url}" alt="">
-                    <p>${product.description}</p>
                 </a>
+                <div class="buttons">
                 <button class="addButton" value="${product.id}">+</button>
                 <button class="deleteButton" value="${product.id}">-</button>
+                </div>
+            </div>
         `
     });
     productContainer.innerHTML += html

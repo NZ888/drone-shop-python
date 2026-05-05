@@ -18,7 +18,7 @@ def render_catalog():
                 query = query.filter(Product.category == category)
             else:
                 query = query.all()
-    pagination = query.paginate(page=page, per_page=2)
+    pagination = query.paginate(page=page, per_page=1)
     for product in Product.query.all():
         if product.category not in categories:
             categories.append(product.category)
