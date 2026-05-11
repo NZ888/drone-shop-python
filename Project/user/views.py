@@ -6,6 +6,7 @@ import flask_login
 from flask_mail import Message
 from Project.settings import mail
 import random
+import werkzeug.security as security
 
 
 def render_login():
@@ -13,16 +14,17 @@ def render_login():
         email = flask.request.form["email"]
         password = flask.request.form["password"]
         user = User.query.filter_by(email=email).first() 
-        # if user:
-        if user.email == email and user.password == password:
+        is_password_compare = security.check_password_hash(user.password, password=password)
+        if user.email == email and is_password_compare:
             flask_login.login_user(user)
     if not flask_login.current_user.is_authenticated:
-        return flask.render_template("login.html")
+        return flask.make_response(flask.jsonify({
+            "success": False
+        }))
     else:
         return flask.redirect("/")    
 
 
-@config_page("register.html", "/verify_code")
 def render_register():
     message = ""
     if flask.request.method == 'POST':
@@ -71,9 +73,9 @@ def render_register():
                 message = "Password didnt match"
         else:
             message = "User alredy exist"
-
-
-    return {"message": message}
+    return flask.make_response(flask.jsonify({
+        "message": message
+    }))
 
 
 
@@ -85,18 +87,23 @@ def render_verify():
         for i in flask.request.form.values():
             verify_code += i
         if flask.session.get("verify_code") == verify_code:
+            password = flask.session.get("password")
+            hashed_password = security.generate_password_hash(password, salt_length=10)
             user = User(
                 first_name = flask.session.get("name"),
                 email = flask.session.get("email"),
-                password = flask.session.get("password")
+                password = hashed_password
             )
             DATA_BASE.session.add(user)
             DATA_BASE.session.commit()
-            flask.redirect("/")
-    return flask.render_template("verify_code.html")
+            return flask.redirect("/")
+    return flask.make_response(flask.jsonify({
+        "success": False
+    }))
 
 
 def logout():
+    # flask.redirect()
     flask.session.clear()
     return flask.redirect("/")
 

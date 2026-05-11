@@ -1,20 +1,6 @@
-{% extends 'base.html' %}
 
-{% block title %}
-    Login
-{% endblock %}
-
-{% block links %}
-    
-{% endblock %}
-
-{% block header %}
-    
-{% endblock %}
-
-{% block content %}
     <div>
-        <form action="" method="post">
+        <form action="/verify_code" method="post">
             <p>Введіть код підтвердження</p>
             <input type="number" name="verify_code1"  autofocus>
             <input type="number" name="verify_code2" >
@@ -25,4 +11,3 @@
             <button type="submit">Підтвердити</button>
         </form>
     </div>
-{% endblock %}

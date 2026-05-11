@@ -1,20 +1,5 @@
-{% extends 'base.html' %}
-
-{% block title %}
-    Registration
-{% endblock %}
-
-{% block links %}
-    <link rel="stylesheet" href="">
-{% endblock links %}
-
-{% block header %}
-    
-{% endblock %}
-
-{% block content %}
     <div>
-        <form action="" method="post">
+        <form action="/register" method="post" id="register_form">
             <p>Ім'я</p>
             <input type="text" placeholder="Enter your username" name="first_name" required minlength="3">
             <p>Email</p>
@@ -23,16 +8,10 @@
             <input type="password" placeholder="Enter your password" name="password" required minlength="8">
             <p>Підтвердження пароля</p>
             <input type="password" placeholder="Confirm your password" name="confirm_password" required>
-            <button type="submit">Send</button>
+            <button type="submit" id="render_verify">Send</button>
         </form>
         {% if message %}
             <p>{{message}}</p>
         {%endif%}
-        <a href="/login">Авторизуватись</a>
+        <button id="render_login">Авторизуватись</button>
     </div>
-
-{% endblock %}
-
-{% block footer %}
-    
-{% endblock %}

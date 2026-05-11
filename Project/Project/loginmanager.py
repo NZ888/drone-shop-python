@@ -4,7 +4,6 @@ import secrets
 from user.models import User
 
 
-project.secret_key = secrets.token_hex()
 
 login_manager = flask_login.LoginManager(app= project)
 
