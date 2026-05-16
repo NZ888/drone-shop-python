@@ -1,3 +1,19 @@
+:root {
+	--alert: #b62d11;
+	--success: #4dbc4b;
+	--blue-100: #0c122a;
+	--secondary-100: #cdd5dd;
+	--white-100: #fff;
+	--blue-80: #3d4155;
+	--blue-60: #6d717f;
+	--blue-40: #9ea0aa;
+	--blue-20: #ced0d4;
+	--blue-10: #e7e7ea;
+	--secondary-40: #f4f4f4;
+	--alert-50: rgba(182, 45, 17, 0.5);
+}
+
+
 #filter_products{
     margin-left: 39px;
     margin-right: 39px;
@@ -11,20 +27,39 @@
 .product{
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    justify-content: center;
     align-items: center;
-
+    padding-top: 16px;
+    justify-content: start;
+    gap: 16px;
 }
 
 .product a{
+font-weight: 500;
+font-size: 24px;
+color: var(--blue-100);
+text-decoration: none;
+}
+
+.price-container{
+    display: flex;
+    gap: 16px;
+    justify-content: start;
+}
+
+.price{
     font-family: var(--font-family);
     font-weight: 500;
-    font-size: 24px;
-    color: var(--blue-100);
-    text-decoration: none;
+    font-size: 14px;
+    color: var(--alert);
 }
-.buttons button{
+.old-price{
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 14px;
+    text-decoration: line-through;
+    color: var(--blue-100);
+}
+/* .buttons button{
     border: 1px solid #0c122a;
     border-radius: 100px;
     padding: 12px 16px;
@@ -36,7 +71,7 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-}
+} */
 
 
 .paginationBtn{
@@ -46,4 +81,143 @@
     height: 40px;
     background:#f4f4f4;
     border-color: transparent;
+}
+
+
+
+
+
+
+
+
+
+
+.select-wrapper {
+    position: relative;
+    width: 260px;
+}
+
+.select-wrapper::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 22px;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.9),
+        rgba(180, 230, 255, 0.35),
+        rgba(255, 255, 255, 0.25)
+    );
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.9),
+        inset 0 -1px 2px rgba(80, 140, 180, 0.25),
+        0 10px 30px rgba(80, 160, 220, 0.25);
+    backdrop-filter: blur(18px) saturate(180%);
+    -webkit-backdrop-filter: blur(18px) saturate(180%);
+    pointer-events: none;
+}
+
+.select-wrapper::after {
+    content: "⌄";
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-56%);
+    font-size: 24px;
+    color: rgba(12, 18, 42, 0.75);
+    pointer-events: none;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+#categories {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-left: 5px;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    border-radius: 22px;
+
+    background:
+        radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.95), transparent 35%),
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.45),
+            rgba(190, 235, 255, 0.25),
+            rgba(255, 255, 255, 0.2)
+        );
+
+    color: var(--blue-100);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+
+    cursor: pointer;
+    outline: none;
+
+    box-shadow:
+        inset 0 1px 2px rgba(255, 255, 255, 0.95),
+        inset 0 -2px 6px rgba(80, 140, 180, 0.18),
+        0 8px 20px rgba(60, 130, 200, 0.18);
+
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease;
+}
+
+#categories:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.95);
+    box-shadow:
+        inset 0 1px 2px rgba(255, 255, 255, 1),
+        inset 0 -2px 8px rgba(80, 140, 180, 0.2),
+        0 14px 34px rgba(80, 170, 230, 0.3);
+}
+
+#categories:focus {
+    border-color: rgba(115, 205, 255, 0.9);
+    box-shadow:
+        inset 0 1px 2px rgba(255, 255, 255, 1),
+        0 0 0 4px rgba(120, 205, 255, 0.28),
+        0 14px 34px rgba(80, 170, 230, 0.35);
+}
+
+#categories option {
+    background: #f7fbff;
+    color: var(--blue-100);
+    font-weight: 500;
+}
+
+
+#categories option {
+    background: rgba(245, 251, 255, 0.96);
+    color: var(--blue-100);
+    font-size: 15px;
+    font-weight: 500;
+    padding: 14px 18px;
+}
+
+#categories option:hover {
+    background: rgba(180, 230, 255, 0.8);
+}
+
+#categories option:checked {
+    background: linear-gradient(
+        135deg,
+        rgba(150, 220, 255, 0.95),
+        rgba(255, 255, 255, 0.95)
+    );
+    color: var(--blue-100);
+    font-weight: 700;
 }

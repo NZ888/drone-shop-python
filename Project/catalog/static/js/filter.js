@@ -33,13 +33,13 @@ async function filterProducts(page) {
         html += `
             <div class="product">
                 <a href="/catalog/${product.id}" class="product_container">
+                    <img style="max-height: 266px;" src="/catalog/static/media/${product.image_url}" alt="">
                     <h1>${product.name}</h1>
-                    <img src="/catalog/static/media/${product.image_url}" alt="">
-                </a>
-                <div class="buttons">
-                <button class="addButton" value="${product.id}">+</button>
-                <button class="deleteButton" value="${product.id}">-</button>
+                    <div class="price-container">
+                    <p class="old-price">${product.old_price}</p>
+                    <p class="price" >${product.price}</p>
                 </div>
+                </a>
             </div>
         `
     });

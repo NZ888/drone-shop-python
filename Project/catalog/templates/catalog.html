@@ -10,59 +10,28 @@
 
 
 {% block content %}
-    <!-- {% if categories %}
-        <div>
-            <form action="/catalog?category=filter" method="post">
-                <select name="categories">
-                    <option value="all">Всі</option>
-                    {% for category in categories %}
-                        <option value="{{category}}">{{category}}</option>
-                    {% endfor %}
-                </select>
-                <button type="submit">select</button>
-            </form>
-        </div>
-    {% endif %} -->
     {% if categories %}
+        <!-- <select name="categories" id="categories">
+            <option value="all">Всі</option>
+            {% for category in categories %}
+                <option value="{{category}}">{{category}}</option>
+            {% endfor %}
+        </select> -->
+    <div class="select-wrapper">
         <select name="categories" id="categories">
             <option value="all">Всі</option>
             {% for category in categories %}
                 <option value="{{category}}">{{category}}</option>
             {% endfor %}
         </select>
+    </div>
     {% endif %}
     <div id="filter_products">
-        <!-- {% if products %}
-            {% for product in products %}
-            
-                <a href="/catalog/{{product.id}}" class="product_container">
-                    <h1>{{product.name}}</h1>
-                    <img src="{{ url_for('catalog.static', filename='media/' + product.image_url) }}" alt="">
-                    <p>{{product.description}}</p>
-                    <button class="addButton" value="{{product.id}}">+</button>
-                    <button class="deleteButton" value="{{product.id}}">-</button>
-                </a>
-            {% endfor %}    
-        {% endif %} -->
+        
     </div>
     <div id="pagination">
         
     </div>
-    <!-- {% if pagination.has_prev %}
-        <a href="?page={{pagination.prev_num}}">
-            <img src="{{ url_for('catalog.static', filename='images/prev.png') }}" alt="prev">
-        </a>
-    {% endif %}
-    
-    {% for page in range(1, pagination.pages + 1) %}
-        <a href="?page={{page}}">{{page}}</a>
-    {% endfor %}
-
-    {% if pagination.has_next %}
-        <a href="?page={{pagination.next_num}}">
-            <img src="{{ url_for('catalog.static', filename='images/next.png') }}" alt="next">
-        </a>
-    {% endif %} -->
     
     <script src="{{ url_for('cart.static', filename='js/countProducts.js')}}" deffer type="module"></script>
     <script src="{{ url_for('catalog.static', filename='js/filter.js')}}" deffer type="module"></script>
