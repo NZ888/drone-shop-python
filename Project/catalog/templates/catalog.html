@@ -5,34 +5,33 @@
 {% endblock %}
 
 {% block links %}
-    <link rel="stylesheet" href="{{url_for('catalog.static', filename='css/catalog.css')}}">
+    <link rel="stylesheet" href="{{ url_for('catalog.static', filename='css/catalog.css') }}">
 {% endblock %}
 
-
 {% block content %}
+
     {% if categories %}
-        <!-- <select name="categories" id="categories">
-            <option value="all">Всі</option>
+        <div class="categories-list">
+            <button class="category-btn active" data-category="all">
+                <span>Всі</span>
+            </button>
+
             {% for category in categories %}
-                <option value="{{category}}">{{category}}</option>
+                <button class="category-btn" data-category="{{ category }}">
+                    <img 
+                        src="{{ url_for('catalog.static', filename='media/categories/' ~ category ~ '.png') }}" 
+                        alt="{{ category }}"
+                    >
+                </button>
             {% endfor %}
-        </select> -->
-    <div class="select-wrapper">
-        <select name="categories" id="categories">
-            <option value="all">Всі</option>
-            {% for category in categories %}
-                <option value="{{category}}">{{category}}</option>
-            {% endfor %}
-        </select>
-    </div>
+        </div>
     {% endif %}
-    <div id="filter_products">
-        
-    </div>
-    <div id="pagination">
-        
-    </div>
-    
-    <script src="{{ url_for('cart.static', filename='js/countProducts.js')}}" deffer type="module"></script>
-    <script src="{{ url_for('catalog.static', filename='js/filter.js')}}" deffer type="module"></script>
+
+    <div id="filter_products"></div>
+
+    <div id="pagination"></div>
+
+    <script src="{{ url_for('cart.static', filename='js/countProducts.js') }}" defer type="module"></script>
+    <script src="{{ url_for('catalog.static', filename='js/filter.js') }}" defer type="module"></script>
+
 {% endblock %}

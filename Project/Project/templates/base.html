@@ -9,16 +9,17 @@
     </head>
     <body>
         <header>
-            <div class="modal-bg">
+            <div class="modal-bg" id="modal_bg"></div>
 
-            </div>
-            <div id="login_div" style="display: none;">
+            <div class="modal-window" id="login_div">
                 {% include 'login.html' %}
             </div>
-            <div id="register_div" style="display: none;">
+
+            <div class="modal-window" id="register_div">
                 {% include 'register.html' %}
             </div>
-            <div id="verify_div" style="display: none;">
+
+            <div class="modal-window" id="verify_div">
                 {% include 'verify_code.html' %}
             </div>
             <nav>

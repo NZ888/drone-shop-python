@@ -1,13 +1,25 @@
+<div class="modal-content">
+    <button class="modal-close" type="button">×</button>
 
-    <div>
-        <form action="/verify_code" method="post">
-            <p>Введіть код підтвердження</p>
-            <input type="number" name="verify_code1"  autofocus>
-            <input type="number" name="verify_code2" >
-            <input type="number" name="verify_code3" >
+    <div class="modal-tabs">
+        <button class="modal-tab active" type="button">Підтвердження</button>
+    </div>
+
+    <form action="/verify_code" method="post" class="modal-form">
+        <label>Введіть код підтвердження</label>
+
+        <div class="verify-inputs">
+            <input type="number" name="verify_code1" autofocus>
+            <input type="number" name="verify_code2">
+            <input type="number" name="verify_code3">
             <input type="number" name="verify_code4">
             <input type="number" name="verify_code5">
             <input type="number" name="verify_code6">
-            <button type="submit">Підтвердити</button>
-        </form>
-    </div>
+        </div>
+
+        <div class="modal-actions">
+            <button type="button" class="cancel-btn modal-cancel">СКАСУВАТИ</button>
+            <button type="submit" class="submit-btn">ПІДТВЕРДИТИ</button>
+        </div>
+    </form>
+</div>

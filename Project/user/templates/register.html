@@ -1,17 +1,32 @@
-    <div>
-        <form action="/register" method="post" id="register_form">
-            <p>Ім'я</p>
-            <input type="text" placeholder="Enter your username" name="first_name" required minlength="3">
-            <p>Email</p>
-            <input type="email" placeholder="Enter your Email" name="email" required>
-            <p>Пароль</p>
-            <input type="password" placeholder="Enter your password" name="password" required minlength="8">
-            <p>Підтвердження пароля</p>
-            <input type="password" placeholder="Confirm your password" name="confirm_password" required>
-            <button type="submit" id="render_verify">Send</button>
-        </form>
-        {% if message %}
-            <p>{{message}}</p>
-        {%endif%}
-        <button id="render_login">Авторизуватись</button>
+<div class="modal-content">
+    <button class="modal-close" type="button">×</button>
+
+    <div class="modal-tabs">
+        <button class="modal-tab" type="button" id="render_login_from_register">Авторизація</button>
+        <span>/</span>
+        <button class="modal-tab active" type="button">Реєстрація</button>
     </div>
+
+    <form action="/register" method="post" id="register_form" class="modal-form">
+        <label>Ім'я</label>
+        <input type="text" placeholder="Введіть ім'я" name="first_name" required minlength="3">
+
+        <label>Email</label>
+        <input type="email" placeholder="Введіть email" name="email" required>
+
+        <label>Пароль</label>
+        <input type="password" placeholder="Введіть пароль" name="password" required minlength="8">
+
+        <label>Підтвердження пароля</label>
+        <input type="password" placeholder="Повторіть пароль" name="confirm_password" required>
+
+        {% if message %}
+            <p class="modal-error">{{ message }}</p>
+        {% endif %}
+
+        <div class="modal-actions">
+            <button type="button" class="cancel-btn modal-cancel">СКАСУВАТИ</button>
+            <button type="submit" class="submit-btn">ЗАРЕЄСТРУВАТИСЯ</button>
+        </div>
+    </form>
+</div>

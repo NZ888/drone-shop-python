@@ -1,15 +1,17 @@
 import { addToCart, deleteInCart } from "../../../cart/static/js/countProducts.js"
 
-const categoriesObj = document.getElementById("categories")
+const categoryBtns = document.querySelectorAll(".category-btn")
 const productContainer = document.getElementById("filter_products")
 const paginationContainer = document.getElementById("pagination")
 
+let selectedCategory = "all"
 
-productContainer.addEventListener("click", (event)=>{
-    if(event.target.classList.contains("addButton")){
+productContainer.addEventListener("click", (event) => {
+    if (event.target.classList.contains("addButton")) {
         addToCart(event.target.value)
     }
-    if(event.target.classList.contains("deleteButton")){
+
+    if (event.target.classList.contains("deleteButton")) {
         deleteInCart(event.target.value)
     }
 })
@@ -21,67 +23,93 @@ async function filterProducts(page) {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            selectCategory: categoriesObj.value,
+            selectCategory: selectedCategory,
             page: page
         })
     })
-    
+
     const data = await response.json()
-    productContainer.innerHTML = ``
+
     let html = ``
+
     data.filtrated_products.forEach(product => {
         html += `
             <div class="product">
                 <a href="/catalog/${product.id}" class="product_container">
-                    <img style="max-height: 266px;" src="/catalog/static/media/${product.image_url}" alt="">
+                    <img 
+                        style="max-height: 266px;" 
+                        src="/catalog/static/media/${product.image_url}" 
+                        alt="${product.name}"
+                    >
+
                     <h1>${product.name}</h1>
+
                     <div class="price-container">
-                    <p class="old-price">${product.old_price}</p>
-                    <p class="price" >${product.price}</p>
-                </div>
+                        <p class="old-price">${product.old_price}</p>
+                        <p class="price">${product.price}</p>
+                    </div>
                 </a>
             </div>
         `
-    });
-    productContainer.innerHTML += html
+    })
+
+    productContainer.innerHTML = html
+
     renderPaginate(data.pagination)
 }
 
-function renderPaginate(pagination){
+function renderPaginate(pagination) {
     let paginationHtml = ``
-    if (pagination.has_prev){
+
+    if (pagination.has_prev) {
         paginationHtml += `
-        <button class="paginationBtn" value=${pagination.has_prev}>
-            <img src="/catalog/static/images/prev.png" alt="prev">
-        </button>
-        `
-    }
-    for (let page = 1; page <= pagination.total_count; page++) {
-        paginationHtml += `
-            <button class="paginationBtn" value=${page}>${page}</button>
+            <button class="paginationBtn" value="${pagination.has_prev}">
+                <img src="/catalog/static/images/prev.png" alt="prev">
+            </button>
         `
     }
 
-    if (pagination.has_next){
+    for (let page = 1; page <= pagination.total_count; page++) {
         paginationHtml += `
-        <button class="paginationBtn" value=${pagination.has_next}>
-            <img src="/catalog/static/images/next.png" alt="next">
-        </button>
+            <button class="paginationBtn" value="${page}">
+                ${page}
+            </button>
         `
-        console.log(pagination.has_next)
     }
+
+    if (pagination.has_next) {
+        paginationHtml += `
+            <button class="paginationBtn" value="${pagination.has_next}">
+                <img src="/catalog/static/images/next.png" alt="next">
+            </button>
+        `
+    }
+
     paginationContainer.innerHTML = paginationHtml
+
     const paginationBtns = document.querySelectorAll(".paginationBtn")
-    paginationBtns.forEach((btn)=>{
-        btn.addEventListener('click', (event)=>{
+
+    paginationBtns.forEach((btn) => {
+        btn.addEventListener("click", (event) => {
             filterProducts(Number(event.currentTarget.value))
         })
     })
 }
 
-categoriesObj.addEventListener("change", ()=>{
-    filterProducts(1)
+categoryBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+        categoryBtns.forEach((item) => {
+            item.classList.remove("active")
+        })
+
+        btn.classList.add("active")
+
+        selectedCategory = btn.dataset.category
+
+        filterProducts(1)
+    })
 })
-window.addEventListener("DOMContentLoaded", ()=>{
+
+window.addEventListener("DOMContentLoaded", () => {
     filterProducts(1)
 })

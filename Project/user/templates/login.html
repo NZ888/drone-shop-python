@@ -1,11 +1,28 @@
+<div class="modal-content">
+    <button class="modal-close" type="button">×</button>
 
-    <div>
-        <form action="/login" method="post">
-            <p>Email</p>
-            <input type="email" name="email" required minlength="3" placeholder="email">
-            <p>Пароль</p>
-            <input type="password" name="password" required minlength="8" placeholder="Введіть пароль">
-            <button type="submit">Авторизуватись</button>
-        </form>
-        <button id="render_register">Зареєструватись</button>
+    <div class="modal-tabs">
+        <button class="modal-tab active" type="button" id="render_login">Авторизація</button>
+        <span>/</span>
+        <button class="modal-tab" type="button" id="render_register">Реєстрація</button>
     </div>
+
+    <form action="/login" method="post" class="modal-form">
+        <label>Email</label>
+        <input type="email" name="email" required minlength="3" placeholder="Введіть email">
+
+        <label>Пароль</label>
+
+        <div class="password-field">
+            <input type="password" name="password" required minlength="8" placeholder="Введіть пароль">
+            <span>⌘</span>
+        </div>
+
+        <a href="#" class="forgot-password">Забули пароль?</a>
+
+        <div class="modal-actions">
+            <button type="button" class="cancel-btn modal-cancel">СКАСУВАТИ</button>
+            <button type="submit" class="submit-btn">УВІЙТИ</button>
+        </div>
+    </form>
+</div>
