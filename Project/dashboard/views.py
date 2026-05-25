@@ -4,6 +4,7 @@ from order.models import Order
 from Project.db import DATA_BASE
 from .models import Delivery
 
+# lalal
 
 def create_contact():
     user = User.query.filter_by(id=flask_login.current_user.id).first()
