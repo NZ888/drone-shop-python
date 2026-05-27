@@ -1,32 +1,135 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Catalog
+    Cart
 {% endblock %}
 
 {% block links %}
-    <link rel="stylesheet" href="{{url_for('catalog.static', filename='css/catalog.css')}}">
+    <link rel="stylesheet" href="{{ url_for('cart.static', filename='css/cart.css') }}">
 {% endblock %}
 
-
 {% block content %}
-    {% if products_list %}
-        <!-- <p>Count: <span id="count"></span></p> -->
-        {% for product_object in products_list %}
-            <div class="product_container">
-                {% if product_object.product %}
-                    <h1>{{product_object.product.name}}</h1>
-                    <img src="{{ url_for('catalog.static', filename='media/' + product_object.product.image_url) }}" alt="">
-                    <p>{{product_object.product.description}}</p>
-                    <span class="renderCount">{{product_object.count}}</span>
-                {% endif %}
-                <button class="addButton" value="{{product_object.product.id}}">+</button>
-                <button class="deleteButton" value="{{product_object.product.id}}">-</button>
-            </div>
-        {% endfor %}    
-        <p>Total price <span id="total_price"></span></p>
-        <a href="/pay">Оплатити</a>
-    {% endif %}
 
-    <script src="{{ url_for('cart.static', filename='js/cart.js')}}" type="module"></script>
+<div class="cart-page-bg">
+    <div class="cart-modal">
+        <div class="cart-header">
+            <h1>Кошик</h1>
+            <a href="/catalog" class="cart-close">×</a>
+        </div>
+
+        <div class="cart-line"></div>
+
+        {% if products_list %}
+            <div class="cart-products">
+                {% for product_object in products_list %}
+                    {% if product_object.product %}
+                        <div 
+                            class="cart-product"
+                            data-product-id="{{ product_object.product.id }}"
+                            data-price="{{ product_object.product.price }}"
+                            data-old-price="{{ product_object.product.old_price or product_object.product.price }}"
+                        >
+                            <div class="cart-product-image">
+                                <img 
+                                    src="{{ url_for('catalog.static', filename='media/' + product_object.product.image_url) }}" 
+                                    alt="{{ product_object.product.name }}"
+                                >
+                            </div>
+
+                            <div class="cart-product-info">
+                                <h2>{{ product_object.product.name }}</h2>
+
+                                <div class="cart-prices">
+                                    {% if product_object.product.old_price %}
+                                        <span class="old-price">
+                                            {{ product_object.product.old_price }} ₴
+                                        </span>
+                                    {% endif %}
+
+                                    <span class="new-price">
+                                        {{ product_object.product.price }} ₴
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="cart-product-actions">
+                                <button 
+                                    class="deleteButton count-btn" 
+                                    type="button"
+                                    value="{{ product_object.product.id }}"
+                                >
+                                    −
+                                </button>
+
+                                <span class="renderCount">{{ product_object.count }}</span>
+
+                                <button 
+                                    class="addButton count-btn" 
+                                    type="button"
+                                    value="{{ product_object.product.id }}"
+                                >
+                                    +
+                                </button>
+
+                                <button 
+                                    class="remove-product" 
+                                    type="button"
+                                    value="{{ product_object.product.id }}"
+                                >
+                                    🗑
+                                </button>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>Загальна сума</span>
+                    <strong><span id="old_total_price">0</span> ₴</strong>
+                </div>
+
+                <div class="summary-row muted">
+                    <span>Заощаджено</span>
+                    <span>- <span id="saved_price">0</span> ₴</span>
+                </div>
+
+                <div class="summary-row total">
+                    <span>Зі знижкою</span>
+                    <strong><span id="total_price">0</span> ₴</strong>
+                </div>
+            </div>
+
+            <div class="cart-footer">
+                <a href="/catalog" class="continue-btn">
+                    ПРОДОВЖИТИ ПОКУПКИ
+                </a>
+
+                <a href="/pay" class="order-btn">
+                    ОФОРМИТИ ЗАМОВЛЕННЯ
+                    <span>→</span>
+                </a>
+            </div>
+        {% else %}
+            <div class="empty-cart">
+                <p>
+                    Ваш кошик порожній.<br>
+                    Почніть вибирати товари, щоб вони з’явилися тут
+                </p>
+            </div>
+
+            <div class="cart-line bottom-line"></div>
+
+            <div class="cart-footer empty-footer">
+                <a href="/catalog" class="continue-btn">
+                    ПРОДОВЖИТИ ПОКУПКИ
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<script src="{{ url_for('cart.static', filename='js/cart.js') }}" type="module"></script>
+
 {% endblock %}
