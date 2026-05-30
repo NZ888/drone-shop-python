@@ -1,0 +1,259 @@
+.order-page {
+    width: 100%;
+    padding: 30px 40px;
+    box-sizing: border-box;
+    color: #0b1020;
+}
+
+.order-form {
+    display: grid;
+    grid-template-columns: minmax(420px, 1fr) 430px;
+    gap: 32px;
+    align-items: start;
+}
+
+.order-left h1 {
+    font-size: 28px;
+    font-weight: 500;
+    margin-bottom: 28px;
+    letter-spacing: 1px;
+}
+
+.order-section {
+    border-top: 1px solid #d8dce5;
+    padding-top: 18px;
+    margin-bottom: 28px;
+}
+
+.order-section h2 {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+
+.order-section label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: #20283a;
+}
+
+.order-section input,
+.order-section textarea,
+.order-section select {
+    width: 100%;
+    height: 38px;
+    border: 1px solid #d6dbe6;
+    border-radius: 3px;
+    padding: 0 12px;
+    box-sizing: border-box;
+    outline: none;
+    font-size: 14px;
+}
+
+.order-section textarea {
+    min-height: 86px;
+    padding-top: 10px;
+    resize: vertical;
+}
+
+.order-section input:focus,
+.order-section textarea:focus,
+.order-section select:focus {
+    border-color: #10162c;
+}
+
+.radio-card {
+    min-height: 44px;
+    border: 1px solid #d6dbe6;
+    padding: 0 14px;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    gap: 12px !important;
+    cursor: pointer;
+    background: #fff;
+}
+
+.radio-card input {
+    width: auto;
+    height: auto;
+}
+
+.radio-card:has(input:checked) {
+    border-color: #10162c;
+    background: #fafbff;
+}
+
+.delivery-details {
+    border: 1px solid #10162c;
+    border-top: none;
+    padding: 16px;
+    margin-top: -12px;
+    margin-bottom: 12px;
+}
+
+.back-button {
+    padding: 9px 20px;
+    border-radius: 30px;
+    border: 1px solid #10162c;
+    background: white;
+    color: #10162c;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.order-summary {
+    position: sticky;
+    top: 20px;
+    border: 1px solid #d6dbe6;
+    border-radius: 8px;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+}
+
+.summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.summary-header h2 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.summary-product {
+    position: relative;
+    display: grid;
+    grid-template-columns: 74px 1fr 24px;
+    gap: 14px;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid #e2e6ef;
+}
+
+.summary-product img {
+    width: 74px;
+    height: 58px;
+    object-fit: contain;
+    background: #f4f5f8;
+    border-radius: 4px;
+}
+
+.summary-product-info h3 {
+    font-size: 14px;
+    margin: 0 0 10px;
+    font-weight: 600;
+}
+
+.summary-prices {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.old-price {
+    font-size: 12px;
+    color: #7b8190;
+    text-decoration: line-through;
+}
+
+.price {
+    font-size: 13px;
+    color: #d13c2f;
+    font-weight: 600;
+}
+
+.renderCount {
+    font-size: 16px;
+    color: #20283a;
+}
+
+.summary-actions {
+    grid-column: 2 / 4;
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.summary-actions button {
+    width: 26px;
+    height: 26px;
+    border: 1px solid #d6dbe6;
+    background: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.summary-total {
+    padding-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.summary-total div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+}
+
+.summary-total strong {
+    font-weight: 600;
+}
+
+.final-price {
+    color: #d13c2f;
+    font-size: 17px !important;
+    margin-top: 4px;
+}
+
+.submit-order {
+    width: 100%;
+    height: 42px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 30px;
+    background: #080d22;
+    color: white;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.submit-order:hover {
+    background: #121936;
+}
+
+.empty-order {
+    font-size: 15px;
+    color: #7b8190;
+}
+
+@media (max-width: 950px) {
+    .order-form {
+        grid-template-columns: 1fr;
+    }
+
+    .order-summary {
+        position: static;
+    }
+}
+
+@media (max-width: 560px) {
+    .order-page {
+        padding: 20px 14px;
+    }
+
+    .order-left h1 {
+        font-size: 22px;
+    }
+}

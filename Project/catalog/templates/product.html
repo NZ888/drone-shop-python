@@ -15,7 +15,18 @@
         <h2>{{product.name}}</h2>
         <img src="{{url_for('catalog.static', filename='media/' + product.image_url) }}" alt="">
     </div>
+
+        <button class="addButton" value="{{ product.id }}">
+            Add to cart
+        </button>
+
+        <p>
+            В корзине этого товара:
+            <span class="renderCount">0</span>
+        </p>
+    </div>
     {% else %}
         <h2>Product not found</h2>
     {% endif %}
+        <script type="module" src="{{ url_for('catalog.static', filename='js/productCart.js') }}"></script>
 {% endblock %}

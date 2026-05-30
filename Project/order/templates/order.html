@@ -1,67 +1,183 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    
+    Оформити замовлення
 {% endblock %}
 
 {% block links %}
-    
+    <link rel="stylesheet" href="{{ url_for('order.static', filename='css/order.css') }}">
 {% endblock %}
 
 {% block content %}
 
-    <form action="/pay" method="post">
-        <input type="text" name="second_name" placeholder="Ваше прізвище">
-        <input type="text" name="first_name" placeholder="Ваше Ім’я">
-        <input type="text" name="surname" placeholder="По Батькові">
-        <input type="tel" name="telephone" placeholder="+ 38 ">
-        <input type="email" name="email" placeholder="Ваш E-mail">
-        <input type="text" name="message" placeholder="Що б ви хотіли уточнити">
-        <label>
-            <input type="radio" name="delivery" value="parcel_machine"> Нова Пошта до поштомату
-        </label>
-        <label>
-            <input type="radio" name="delivery" value="warehouse"> Нова Пошта до відділення
-        </label>
-        <label>
-            <input type="radio" name="delivery" value="expres_delivery"> Експрес-доставка по Києву
-        </label>
-        <label>
-            <input type="radio" name="delivery" value="courier"> Нова Пошта кур’єром
-        </label>
+<section class="order-page">
+    <form class="order-form" action="/pay" method="post">
 
-        <label>
-            <input type="radio" name="payment" value="cash"> Оплата при отриманні
-        </label>
-        <label>
-            <input type="radio" name="payment" value="card"> Оплатити зараз
-        </label>
-        
+        <div class="order-left">
+            <h1>ОФОРМИТИ ЗАМОВЛЕННЯ</h1>
 
-        
-        <div style="display: none;" id="modal_for_delivery">
-            <input type="text" id="cityName" name="cityName">
-            <select id="warehouse" name="warehouse"></select>
+            <div class="order-section">
+                <h2>Ваші контактні дані</h2>
+
+                <label>
+                    Прізвище
+                    <input type="text" name="second_name" placeholder="Ваше Прізвище" required>
+                </label>
+
+                <label>
+                    Ім’я
+                    <input type="text" name="first_name" placeholder="Ваше Ім’я" required>
+                </label>
+
+                <label>
+                    По батькові
+                    <input type="text" name="surname" placeholder="По батькові">
+                </label>
+
+                <label>
+                    Телефон
+                    <input type="tel" name="telephone" placeholder="+ 38 0" required>
+                </label>
+
+                <label>
+                    E-mail
+                    <input type="email" name="email" placeholder="Ваш E-mail" required>
+                </label>
+
+                <label>
+                    Коментар до замовлення
+                    <textarea name="message" placeholder="Що б ви хотіли уточнити"></textarea>
+                </label>
+            </div>
+
+            <div class="order-section">
+                <h2>Доставка</h2>
+
+                <label class="radio-card">
+                    <input type="radio" name="delivery" value="parcel_machine">
+                    <span>Нова Пошта до поштомату</span>
+                </label>
+
+                <label class="radio-card">
+                    <input type="radio" name="delivery" value="warehouse" checked>
+                    <span>Нова Пошта до відділення</span>
+                </label>
+
+                <div id="modal_for_delivery" class="delivery-details">
+                    <label>
+                        Місто
+                        <input type="text" id="cityName" name="cityName" placeholder="Дніпро">
+                    </label>
+
+                    <label>
+                        Відділення / поштомат
+                        <select id="warehouse" name="warehouse">
+                            <option value="">Спочатку введіть місто</option>
+                        </select>
+                    </label>
+                </div>
+
+                <label class="radio-card">
+                    <input type="radio" name="delivery" value="expres_delivery">
+                    <span>Експрес-доставка по Києву</span>
+                </label>
+
+                <label class="radio-card">
+                    <input type="radio" name="delivery" value="courier">
+                    <span>Нова Пошта кур’єром</span>
+                </label>
+            </div>
+
+            <div class="order-section">
+                <h2>Оплата</h2>
+
+                <label class="radio-card">
+                    <input type="radio" name="payment" value="cash">
+                    <span>Оплата при отриманні</span>
+                </label>
+
+                <label class="radio-card">
+                    <input type="radio" name="payment" value="card" checked>
+                    <span>Оплатити зараз</span>
+                </label>
+            </div>
+
+            <button type="button" class="back-button" onclick="history.back()">
+                Повернутись
+            </button>
         </div>
 
+        <aside class="order-summary">
+            <div class="summary-header">
+                <h2>Замовлення</h2>
+                <span>✎</span>
+            </div>
 
-        {% if products_list %}
-            {% for product_object in products_list %}
-                <div class="product_container">
-                    <h1>{{product_object.product.name}}</h1>
-                    <img src="{{ url_for('catalog.static', filename='media/' + product_object.product.image_url) }}" alt="">
-                    <p>{{product_object.product.description}}</p>
-                    <span class="renderCount">{{product_object.count}}</span>
-                    <button class="addButton" value="{{product_object.product.id}}">+</button>
-                    <button class="deleteButton" value="{{product_object.product.id}}">-</button>
+            {% if products_list %}
+                {% for product_object in products_list %}
+                    <div 
+                        class="cart-product summary-product"
+                        data-price="{{ product_object.product.price }}"
+                        data-old-price="{{ product_object.product.old_price }}"
+                    >
+                        <img src="{{ url_for('catalog.static', filename='media/' + product_object.product.image_url) }}" alt="">
+
+                        <div class="summary-product-info">
+                            <h3>{{ product_object.product.name }}</h3>
+
+                            <div class="summary-prices">
+                                <span class="old-price">
+                                    {{ product_object.product.old_price }} ₴
+                                </span>
+                                <span class="price">
+                                    {{ product_object.product.price }} ₴
+                                </span>
+                            </div>
+                        </div>
+
+                        <span class="renderCount">{{ product_object.count }}</span>
+
+                        <div class="summary-actions">
+                            <button type="button" class="addButton" value="{{ product_object.product.id }}">+</button>
+                            <button type="button" class="deleteButton" value="{{ product_object.product.id }}">-</button>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <div class="summary-total">
+                    <div>
+                        <span>Загальна сума</span>
+                        <strong><span id="old_total_price">0</span> ₴</strong>
+                    </div>
+
+                    <div>
+                        <span>Заощаджено</span>
+                        <strong><span id="saved_price">0</span> ₴</strong>
+                    </div>
+
+                    <div>
+                        <span>Доставка</span>
+                        <span>За тарифами перевізника</span>
+                    </div>
+
+                    <div class="final-price">
+                        <span>Зі знижкою</span>
+                        <strong><span id="total_price">0</span> ₴</strong>
+                    </div>
                 </div>
-            {% endfor %}    
-            <p>Total price <span id="total_price"></span></p>
-            {% endif %}
-        <button type="submit">Оплатити</button>
 
-    
+                <button type="submit" class="submit-order">
+                    Підтвердити замовлення
+                </button>
+            {% else %}
+                <p class="empty-order">Кошик порожній</p>
+            {% endif %}
+        </aside>
+
     </form>
-    <script src="{{ url_for('cart.static', filename='js/cart.js')}}" type="module"></script>
-    <script src="{{ url_for('order.static', filename='js/order.js')}}" type="module"></script>
+</section>
+
+<script src="{{ url_for('cart.static', filename='js/cart.js') }}" type="module"></script>
+<script src="{{ url_for('order.static', filename='js/order.js') }}" type="module"></script>
+
 {% endblock %}

@@ -16,10 +16,10 @@
 
 #filter_products{
     margin-left: 39px;
-    margin-right: 39px;
+    /* margin-right: 39px; */
     display: flex;
     flex-direction: row;
-    width: 100%;
+    /* width: 100%; */
     height: auto;
     gap: 58px;
 }
