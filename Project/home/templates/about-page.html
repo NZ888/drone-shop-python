@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Про нас
+{% endblock %}
+
+{% block body_class %}about-page info-page{% endblock %}
+
+{% block links %}
+    <link rel="stylesheet" href="{{ url_for('home.static', filename='css/info-pages.css') }}">
+{% endblock %}
+
+{% block content %}
+    <section class="about-intro">
+        <h1>Про нас</h1>
+        <p>
+            Ми - команда, яка об'єднала світові новинки: дрони, системи передачі технології
+            доступними для кожного, хто потребує точності, безпеки та інновацій.
+            З 2022 року ми спеціалізуємось на постачанні дронів і тепловізорів для професійного,
+            цивільного та волонтерського використання.
+        </p>
+
+        <figure class="about-image about-image-main">
+            <img src="{{ url_for('home.static', filename='images/about/1.png') }}" alt="Офісна будівля Drones">
+        </figure>
+    </section>
+
+    <section class="about-row">
+        <div class="about-text">
+            <h2>Наша місія</h2>
+            <p>
+                Допомагати тим, хто стоїть на передовій - у прямому й переносному сенсі.
+                Ми збираємо тільки надійну техніку, яку перевіряємо самі. Наша мета -
+                якість, простота, підтримка на кожному етапі від покупки до використання.
+            </p>
+        </div>
+
+        <figure class="about-image">
+            <img src="{{ url_for('home.static', filename='images/about/2.png') }}" alt="Робочий простір команди Drones">
+        </figure>
+    </section>
+
+    <section class="about-row about-row-reverse">
+        <figure class="about-image">
+            <img src="{{ url_for('home.static', filename='images/about/3.png') }}" alt="Команда Drones під час зустрічі">
+        </figure>
+
+        <div class="about-text">
+            <h2>Команда, якій можна довіряти</h2>
+            <p>
+                Ми - не просто магазин. Ми - фахівці, які самі працюють із цією технікою
+                й консультують з досвіду. Засновники проєкту - волонтери, військові та IT-спеціалісти,
+                які об'єднали зусилля заради важливої справи.
+            </p>
+        </div>
+    </section>
+{% endblock %}

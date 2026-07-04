@@ -1,31 +1,38 @@
-<div>
+<section class="dashboard-panel">
+    <h2>Контактні дані</h2>
 
-    <form action="/contact-page" method="post">
-        <div>
-            <label>Прізвище</label>
-            <input type="text" name="last_name" value="{{user.last_name if user and user.last_name else ''}}">
+    <form class="dashboard-form" action="/contact-page/" method="post">
+        <div class="form-row">
+            <label for="last_name">Прізвище</label>
+            <input id="last_name" type="text" name="last_name" placeholder="Ваше Прізвище" value="{{ user.last_name if user and user.last_name else '' }}">
         </div>
-        <div>
-            <label>Ім’я</label>
-            <input type="text" name="first_name" value="{{user.first_name if user and user.first_name else ''}}" >
+
+        <div class="form-row">
+            <label for="first_name">Ім'я</label>
+            <input id="first_name" type="text" name="first_name" placeholder="Ваше Ім'я" value="{{ user.first_name if user and user.first_name else '' }}">
         </div>
-        <div>
-            <label>По батькові</label>
-            <input type="text" name="second_name" value="{{user.second_name if user and user.second_name else ''}}">
+
+        <div class="form-row">
+            <label for="second_name">По батькові</label>
+            <input id="second_name" type="text" name="second_name" placeholder="По батькові" value="{{ user.second_name if user and user.second_name else '' }}">
         </div>
-        <div>
-            <label>Дата народження</label>
-            <input type="text" name="date" value="{{user.date_of_birth if user and user.date_of_birth else ''}}">
+
+        <div class="form-row">
+            <label for="date">Дата народження</label>
+            <input id="date" type="text" name="date" placeholder="DD / MM / YYYY" value="{{ user.date_of_birth if user and user.date_of_birth else '' }}">
         </div>
-        <div>
-            <label>Телефон</label>
-            <input type="text" name="phone" value="{{user.phone if user and user.phone else ''}}">
+
+        <div class="form-row">
+            <label for="phone">Телефон</label>
+            <input id="phone" type="text" name="phone" placeholder="+ 38 0" value="{{ user.phone if user and user.phone else '' }}">
         </div>
-        <div>
-            <label>E-mail</label>
-            <input type="text" name="email" value="{{user.email if user and user.email else ''}}">
+
+        <div class="form-row">
+            <label for="email">E-mail</label>
+            <input id="email" type="email" name="email" placeholder="Ваш E-mail" value="{{ user.email if user and user.email else '' }}">
         </div>
-        <button type="submit">Зберегти зміни</button>
+
+        <p class="dashboard-form-message" data-form-message></p>
+        <button class="outline-btn" type="submit">Зберегти зміни</button>
     </form>
-
-</div>
+</section>

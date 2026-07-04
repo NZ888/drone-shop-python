@@ -7,30 +7,50 @@ from catalog.models import Product
 from cart.utils import count_products_price
 
 
+def get_products_from_raw_ids(raw_id_list):
+    product_list = []
+
+    if not raw_id_list:
+        return product_list
+
+    id_list = raw_id_list.split(sep="|")
+    id_list_copy = set(id_list)
+
+    for id in id_list_copy:
+        product = Product.query.get(id)
+
+        if product:
+            product_list.append({
+                "product": product,
+                "count": id_list.count(id)
+            })
+
+    return product_list
+
+
 def render_order():
     if not flask_login.current_user.is_authenticated:
         return flask.redirect("/login")
-    user_id = flask_login.current_user.id
-    user = User.query.filter_by(id=user_id).first()
-    product_list = []
-    cookies_id = flask.request.cookies.get("id_list")
-    if cookies_id:
-        id_list = cookies_id.split(sep="|")
-        id_list_copy = id_list.copy()
-        id_list_copy = set(id_list_copy)
-        for id in id_list_copy:
-            product = Product.query.get(id)
-            product_list.append({
-                "product" : product,
-                "count" : id_list.count(id)
-            })
-    
-    return flask.render_template('order.html', products_list=product_list)
+
+    product_id = flask.request.args.get("product_id")
+
+    if product_id:
+        raw_id_list = product_id
+    else:
+        raw_id_list = flask.request.cookies.get("id_list")
+
+    product_list = get_products_from_raw_ids(raw_id_list)
+
+    return flask.render_template(
+        'order.html',
+        products_list=product_list,
+        checkout_ids=raw_id_list or ""
+    )
 
 def get_warehouses(city_name: str):
     TOKEN = os.environ["NOVA_POST_TOKEN"]
     delivery_type = flask.request.args.get('type')
-    
+
     payload = {
         "api_key": TOKEN,
         "modelName": "Address",
@@ -54,26 +74,16 @@ def get_warehouses(city_name: str):
         elif data["TypeOfWarehouse"] == "6f8c7162-4b72-4b0a-88e5-906948c6a92f" and delivery_type == "expres_delivery":
             warehouses.append(data["Description"])
         elif data["TypeOfWarehouse"] == "9a68df70-0267-42a8-bb5c-37f427e36ee4" and delivery_type == "courier":
-            warehouses.append(data["Description"])    
+            warehouses.append(data["Description"])
     response = flask.make_response(flask.jsonify({
         "warehouses" : warehouses
     }))
     return response
 
 def pay():
-    product_list = []
-    cookies_id = flask.request.cookies.get("id_list")
-    if cookies_id:
-        id_list = cookies_id.split(sep="|")
-        id_list_copy = id_list.copy()
-        id_list_copy = set(id_list_copy)
-        for id in id_list_copy:
-            product = Product.query.get(id)
-            product_list.append({
-                "product" : product,
-                "count" : id_list.count(id)
-            })
     if flask.request.method == "POST":
+        raw_id_list = flask.request.form.get("checkout_ids") or flask.request.cookies.get("id_list")
+        product_list = get_products_from_raw_ids(raw_id_list)
         first_name = flask.request.form["first_name"]
         second_name = flask.request.form["second_name"]
         surname = flask.request.form["surname"]
@@ -97,7 +107,7 @@ def pay():
             order.products.append(product["product"])
         DATA_BASE.session.add(order)
         DATA_BASE.session.commit()
-    raw_id_list = flask.request.cookies.get("id_list") 
+    raw_id_list = flask.request.form.get("checkout_ids") or flask.request.cookies.get("id_list")
     sum = count_products_price(raw_id_list=raw_id_list)
 
     if payment == "card":
@@ -118,5 +128,5 @@ def pay():
         request = response.json()
         pay_url = request["pageUrl"]
         return flask.redirect(pay_url)
-    
+
     return flask.redirect("/")

@@ -3,12 +3,13 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}{% endblock title %}</title>
-        {% block links %}{% endblock links %}
         <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
         <link rel="stylesheet" href="{{ url_for('cart.static', filename='css/cart.css') }}">
+        {% block links %}{% endblock links %}
     </head>
-    <body>
+    <body class="{% block body_class %}{% endblock body_class %}">
+{% block page_header %}
 <header>
     <div class="modal-bg" id="modal_bg"></div>
 
@@ -29,8 +30,8 @@
     <nav>
         <div class="navigation">
             <a href="/catalog/">Каталог</a>
-            <a href="">Про нас</a>
-            <a href="">Контакти</a>
+            <a href="/about/">Про нас</a>
+            <a href="/contacts/">Контакти</a>
         </div>
 
         <a href="/">
@@ -57,13 +58,15 @@
     {% block header %}
     {% endblock %}
 </header>
+{% endblock %}
 
         <main>
             {% block content %}
-                
+
             {% endblock %}
         </main>
 
+{% block page_footer %}
         <footer>
             {% block footer %}
                 <div class="elipse">
@@ -90,6 +93,7 @@
             {% endblock %}
             <p>© 2025 Drones Всі права захищені.</p>
         </footer>
+{% endblock %}
         <script src="{{ url_for('static', filename='js/modal.js') }}"></script>
     </body>
 </html>

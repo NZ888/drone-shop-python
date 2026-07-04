@@ -8,25 +8,33 @@
     <link rel="stylesheet" href="{{ url_for('order.static', filename='css/order.css') }}">
 {% endblock %}
 
-{% block content %}
+{% block page_header %}
+    {% include 'order_header.html' %}
+{% endblock %}
 
+{% block page_footer %}
+    {% include 'order_footer.html' %}
+{% endblock %}
+
+{% block content %}
 <section class="order-page">
-    <form class="order-form" action="/pay" method="post">
+    <form class="order-form" action="/pay/" method="post">
+        <input type="hidden" name="checkout_ids" value="{{ checkout_ids }}">
 
         <div class="order-left">
-            <h1>ОФОРМИТИ ЗАМОВЛЕННЯ</h1>
+            <h1>Оформити замовлення</h1>
 
             <div class="order-section">
                 <h2>Ваші контактні дані</h2>
 
                 <label>
                     Прізвище
-                    <input type="text" name="second_name" placeholder="Ваше Прізвище" required>
+                    <input type="text" name="second_name" placeholder="Ваше прізвище" required>
                 </label>
 
                 <label>
-                    Ім’я
-                    <input type="text" name="first_name" placeholder="Ваше Ім’я" required>
+                    Ім'я
+                    <input type="text" name="first_name" placeholder="Ваше ім'я" required>
                 </label>
 
                 <label>
@@ -36,7 +44,7 @@
 
                 <label>
                     Телефон
-                    <input type="tel" name="telephone" placeholder="+ 38 0" required>
+                    <input type="tel" name="telephone" placeholder="+38 0" required>
                 </label>
 
                 <label>
@@ -84,7 +92,7 @@
 
                 <label class="radio-card">
                     <input type="radio" name="delivery" value="courier">
-                    <span>Нова Пошта кур’єром</span>
+                    <span>Нова Пошта кур'єром</span>
                 </label>
             </div>
 
@@ -102,45 +110,44 @@
                 </label>
             </div>
 
-            <button type="button" class="back-button" onclick="history.back()">
-                Повернутись
-            </button>
+            <button type="button" class="back-button" onclick="history.back()">Повернутись</button>
         </div>
 
         <aside class="order-summary">
             <div class="summary-header">
                 <h2>Замовлення</h2>
-                <span>✎</span>
             </div>
 
             {% if products_list %}
                 {% for product_object in products_list %}
-                    <div 
+                    <div
                         class="cart-product summary-product"
+                        data-product-id="{{ product_object.product.id }}"
+                        data-product-name="{{ product_object.product.name }}"
                         data-price="{{ product_object.product.price }}"
                         data-old-price="{{ product_object.product.old_price }}"
                     >
-                        <img src="{{ url_for('catalog.static', filename='media/' + product_object.product.image_url) }}" alt="">
+                        <img src="{{ url_for('catalog.static', filename='media/' + product_object.product.image_url) }}" alt="{{ product_object.product.name }}">
 
                         <div class="summary-product-info">
                             <h3>{{ product_object.product.name }}</h3>
 
                             <div class="summary-prices">
-                                <span class="old-price">
-                                    {{ product_object.product.old_price }} ₴
-                                </span>
-                                <span class="price">
-                                    {{ product_object.product.price }} ₴
-                                </span>
+                                <span class="old-price">{{ product_object.product.old_price }} ₴</span>
+                                <span class="price">{{ product_object.product.price }} ₴</span>
                             </div>
                         </div>
 
                         <span class="renderCount">{{ product_object.count }}</span>
 
-                        <div class="summary-actions">
-                            <button type="button" class="addButton" value="{{ product_object.product.id }}">+</button>
-                            <button type="button" class="deleteButton" value="{{ product_object.product.id }}">-</button>
-                        </div>
+                        <button
+                            type="button"
+                            class="edit-order-product"
+                            value="{{ product_object.product.id }}"
+                            aria-label="Редагувати товар"
+                        >
+                            ✎
+                        </button>
                     </div>
                 {% endfor %}
 
@@ -166,18 +173,41 @@
                     </div>
                 </div>
 
-                <button type="submit" class="submit-order">
-                    Підтвердити замовлення
-                </button>
+                <button type="submit" class="submit-order">Підтвердити замовлення</button>
             {% else %}
                 <p class="empty-order">Кошик порожній</p>
             {% endif %}
         </aside>
-
     </form>
 </section>
 
+<div class="order-product-modal-bg" id="order_product_modal_bg"></div>
+<div class="order-product-modal" id="order_product_modal" aria-hidden="true">
+    <button type="button" class="order-product-modal-close" id="close_order_product_modal">×</button>
+    <h2>Редагувати товар</h2>
+    <p id="order_product_modal_name"></p>
+
+    <label>
+        Кількість
+        <input type="number" min="1" id="order_product_count">
+    </label>
+
+    <label>
+        Ціна
+        <input type="number" min="0" id="order_product_price">
+    </label>
+
+    <label>
+        Параметри товару
+        <input type="text" id="order_product_options" placeholder="Наприклад: комплект, колір, пам'ять">
+    </label>
+
+    <div class="order-product-modal-actions">
+        <button type="button" id="cancel_order_product_modal">Скасувати</button>
+        <button type="button" id="save_order_product_modal">Зберегти</button>
+    </div>
+</div>
+
 <script src="{{ url_for('cart.static', filename='js/cart.js') }}" type="module"></script>
 <script src="{{ url_for('order.static', filename='js/order.js') }}" type="module"></script>
-
 {% endblock %}

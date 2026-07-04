@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    home
+    Home
 {% endblock %}
 
 {% block links %}
@@ -17,11 +17,13 @@
             </p>
         </div>
         <img src="{{ url_for('static', filename='images/drone.svg') }}" alt="drone image" class="image">
-        <div class="promo" >
-            <p>Передові технології в одному місці. <br> 
-                Обирай найкраще для найважливішого.</p>
+        <div class="promo">
+            <p>
+                Передові технології в одному місці. <br>
+                Обирай найкраще для найважливішого.
+            </p>
             <div class="custom-button">
-                <a href="/catalog">До каталогу</a>
+                <a href="/catalog/">До каталогу</a>
             </div>
         </div>
         <div class="elipse1"></div>
@@ -30,51 +32,61 @@
 
 {% block content %}
     <div class="containerAbout">
-            <h2>
-                ПРО НАС
-            </h2>
-            <p>
-                Ми — команда, що об&#39;єднує технології та надійність. <br/>
-                Пропонуємо дрони й тепловізори, перевірені у найскладніших умовах. <br/>
-                Обираємо тільки те, чому довіряємо самі.
-            </p>
-            <div class="custom-button">
-                <a href="/catalog">ЧИТАТИ БІЛЬШЕ</a>
-            </div>
+        <h2>Про нас</h2>
+        <p>
+            Ми - команда, що об'єднує технології та надійність. <br/>
+            Пропонуємо дрони й тепловізори, перевірені у найскладніших умовах. <br/>
+            Обираємо тільки те, чому довіряємо самі.
+        </p>
+        <div class="custom-button">
+            <a href="/about/">Читати більше</a>
+        </div>
     </div>
+
     <div class="new-container">
         <p id="article">Нове на сайті</p>
         <div class="products-container">
             {% for product in new_products %}
+                {% set product_url = url_for('catalog.render_product_by_slug', slug=product.slug) if product.slug else '/catalog/' ~ product.id ~ '/' %}
                 <div class="item">
-                    <div class="image-box">
-                        <img src="{{ url_for('catalog.static', filename='media/' + product.image_url) }}" alt="{{product.name}}">
-                    </div>
+                    <a class="image-box" href="{{ product_url }}">
+                        <img src="{{ url_for('catalog.static', filename='media/' + product.image_url) }}" alt="{{ product.name }}">
+                    </a>
                     <div class="text-info">
-                        <h3>{{product.name}}</h3>
-                        <p>{{product.description}}</p>
-                  </div>
+                        <a href="{{ product_url }}">
+                            <h3>{{ product.name }}</h3>
+                            <p>{{ product.description }}</p>
+                        </a>
+                        <div class="home-card-price">
+                            {% if product.old_price %}
+                                <span class="old-price">{{ product.old_price }} ₴</span>
+                            {% endif %}
+                            <span class="price">{{ product.price }} ₴</span>
+                        </div>
+                    </div>
                 </div>
             {% endfor %}
         </div>
     </div>
-    <p id="article">каталог</p>
-    <div class="catalog">
-            {% for catalog_product in catalog %}
-                <div class="catalog-item">
-                    <div class="image-box">
-                        <img src="{{ url_for('catalog.static', filename='media/' + catalog_product.image_url) }}" alt="{{catalog_product.name}}">
-                    </div>
-                    <div class="catalog-text-info">
-                        <h3>{{catalog_product.name}}</h3>
-                  </div>
-                  <div class="catalog-product-price">
-                    <p class="old-price">{{catalog_product.old_price}}</p>
-                    <p class="price" >{{catalog_product.price}}</p>
 
-                  </div>
+    <p id="article">Каталог</p>
+    <div class="catalog">
+        {% for catalog_product in catalog %}
+            {% set catalog_product_url = url_for('catalog.render_product_by_slug', slug=catalog_product.slug) if catalog_product.slug else '/catalog/' ~ catalog_product.id ~ '/' %}
+            <div class="catalog-item">
+                <a class="image-box" href="{{ catalog_product_url }}">
+                    <img src="{{ url_for('catalog.static', filename='media/' + catalog_product.image_url) }}" alt="{{ catalog_product.name }}">
+                </a>
+                <div class="catalog-text-info">
+                    <a href="{{ catalog_product_url }}">{{ catalog_product.name }}</a>
                 </div>
-            {% endfor %}
+                <div class="catalog-product-price">
+                    {% if catalog_product.old_price %}
+                        <p class="old-price">{{ catalog_product.old_price }} ₴</p>
+                    {% endif %}
+                    <p class="price">{{ catalog_product.price }} ₴</p>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}
-

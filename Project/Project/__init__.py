@@ -3,7 +3,7 @@ from .settings import *
 from .db import*
 from .loadenv import execute
 from user.models import User
-from catalog.models import Product
+from catalog.models import Product, ProductBlock, ProductSpecifications
 # add registration blueprint
 from .config_page import config_page
 from .loginmanager import *

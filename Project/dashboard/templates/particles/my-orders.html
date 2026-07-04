@@ -1,9 +1,129 @@
-<div>
+<section class="dashboard-panel orders-panel">
+    <h2>Мої замовлення</h2>
 
-    {% for order in orders %}
-        <p>{{order.first_name}}</p>
-        <p>{{order.second_name}}</p>
-        <p>{{order.last_name}}</p>
-    {% endfor %}
+    {% if orders %}
+        <div class="orders-list">
+            {% for order in orders %}
+                {% set order_products = order.products %}
+                {% set total = namespace(value=0) %}
+                {% for product in order_products %}
+                    {% set total.value = total.value + product.price %}
+                {% endfor %}
+                {% set track_number = '20030040050000' %}
 
-</div>
+                <article class="order-card {% if loop.first %}is-open{% endif %}" data-order-id="{{ order.id }}">
+                    <div class="order-summary">
+                        <span class="order-status-dot {% if loop.first %}status-processing{% else %}status-done{% endif %}"></span>
+
+                        <div>
+                            <span class="order-muted">№{{ order.id }} від 20.04.2023</span>
+                            <strong>{{ 'Оформлення' if loop.first else 'Виконано' }}</strong>
+                        </div>
+
+                        <div>
+                            <span class="order-muted">Номер відправлення</span>
+                            <strong>{{ track_number }}</strong>
+                        </div>
+
+                        <div>
+                            <span class="order-muted">Сума замовлення</span>
+                            <strong>{{ total.value if total.value else 25830 }} ₴</strong>
+                        </div>
+
+                        <div class="order-thumbs">
+                            {% for product in order_products[:2] %}
+                                <img src="{{ url_for('catalog.static', filename='media/' + product.image_url) }}" alt="{{ product.name }}">
+                            {% endfor %}
+                        </div>
+
+                        <button class="order-toggle" type="button" aria-label="Розгорнути замовлення">⌄</button>
+                    </div>
+
+                    <div class="order-details">
+                        <div class="track-row">
+                            <span>Номер відправлення:</span>
+                            <strong>{{ track_number }}</strong>
+                            <button class="copy-track-btn" type="button" data-track="{{ track_number }}" aria-label="Скопіювати номер">□</button>
+                        </div>
+
+                        <div class="order-steps" aria-label="Статус замовлення">
+                            <span class="active">Оформлено</span>
+                            <span>Збирається</span>
+                            <span>У дорозі</span>
+                            <span>Доставлено</span>
+                            <span>Отримано</span>
+                        </div>
+
+                        <div class="order-info-grid">
+                            <div class="order-address">
+                                <h3>Інформація про замовлення</h3>
+                                <span>Адреса доставки</span>
+                                <p>{{ order.warehouse if order.warehouse else 'Нова Пошта до відділення' }}</p>
+                                <p>Дніпро, Відділення №1: вул. Маршала Малиновського, 114</p>
+
+                                <span>Отримувач</span>
+                                <p>{{ order.surname if order.surname else user.last_name }} {{ order.first_name if order.first_name else user.first_name }}</p>
+                                <p>{{ order.phone if order.phone else '+380 99 123 45 68' }}</p>
+                            </div>
+
+                            <div class="order-products-table">
+                                <div class="table-head">
+                                    <span>Фото</span>
+                                    <span>Назва</span>
+                                    <span>Ціна</span>
+                                    <span>Кількість</span>
+                                    <span>Сума</span>
+                                </div>
+
+                                {% for product in order_products %}
+                                    <div class="table-row">
+                                        <img src="{{ url_for('catalog.static', filename='media/' + product.image_url) }}" alt="{{ product.name }}">
+                                        <strong>{{ product.name }}</strong>
+                                        <span>
+                                            {% if product.old_price %}
+                                                <del>{{ product.old_price }} ₴</del>
+                                            {% endif %}
+                                            {{ product.price }} ₴
+                                        </span>
+                                        <span>1</span>
+                                        <span>{{ product.price }} ₴</span>
+                                    </div>
+                                {% else %}
+                                    <div class="table-row">
+                                        <span></span>
+                                        <strong>Товар</strong>
+                                        <span>29 990 ₴</span>
+                                        <span>1</span>
+                                        <span>28 985 ₴</span>
+                                    </div>
+                                {% endfor %}
+
+                                <dl class="order-payment">
+                                    <dt>Оплата</dt>
+                                    <dd>{{ order.pay_method if order.pay_method else 'Накладений платіж' }}</dd>
+                                    <dt>Доставка</dt>
+                                    <dd>За тарифами перевізника</dd>
+                                    <dt>Загальна сума</dt>
+                                    <dd>{{ total.value if total.value else 29990 }} ₴</dd>
+                                    <dt>Заощаджено</dt>
+                                    <dd>1 005 ₴</dd>
+                                    <dt>Разом</dt>
+                                    <dd>{{ total.value if total.value else 28985 }} ₴</dd>
+                                </dl>
+
+                                <p class="dashboard-form-message order-message" data-order-message></p>
+                                <button class="outline-btn cancel-order-btn" type="button" data-cancel-url="/dashboard/orders/cancel/{{ order.id }}/">
+                                    Скасувати
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-dashboard">
+            <p>У вас ще немає замовлень.</p>
+        </div>
+    {% endif %}
+</section>
