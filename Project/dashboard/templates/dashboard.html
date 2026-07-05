@@ -1,33 +1,49 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Dashboard
+    Особистий кабінет
 {% endblock %}
+
+{% block body_class %}dashboard-page{% endblock %}
 
 {% block links %}
-    
-{% endblock %}
-
-{% block header %}
-    
+    <link rel="stylesheet" href="{{ url_for('dashboard.static', filename='css/dashboard.css') }}">
 {% endblock %}
 
 {% block content %}
-    <div>
-        <p>Особистий Кабінет</p>
-        <button id="contact">Контактні дані</button>
-        <div id="contact-page">
-            {% include 'particles/contact-page.html' %}
+    <section class="dashboard-shell">
+        <aside class="dashboard-sidebar">
+            <h1>Особистий кабінет</h1>
+
+            <nav class="dashboard-menu" aria-label="Кабінет">
+                <button class="dashboard-menu-btn active" type="button" id="contact" data-tab="contact-page">
+                    Контактні дані
+                </button>
+                <button class="dashboard-menu-btn" type="button" id="orders" data-tab="orders-page">
+                    Мої замовлення
+                </button>
+                <button class="dashboard-menu-btn" type="button" id="delivery" data-tab="delivery-page">
+                    Адреса доставки
+                </button>
+            </nav>
+
+            <a class="dashboard-logout" href="/logout/">Вийти</a>
+        </aside>
+
+        <div class="dashboard-content">
+            <div class="dashboard-tab active" id="contact-page">
+                {% include 'particles/contact-page.html' %}
+            </div>
+
+            <div class="dashboard-tab" id="orders-page">
+                {% include 'particles/my-orders.html' %}
+            </div>
+
+            <div class="dashboard-tab" id="delivery-page">
+                {% include 'particles/delivery-info.html' %}
+            </div>
         </div>
-        <button id="orders">Мої замовлення</button>
-        <div id="orders-page" style="display: none;">
-            {% include 'particles/my-orders.html' %}
-        </div>
-        <button id="delivery">Адреса доставки</button>
-        <div id="delivery-page" style="display: none;">
-            {% include 'particles/delivery-info.html' %}
-        </div>
-        <button>Вийти</button>
-    </div>
-    <script src="{{url_for('dashboard.static', filename='js/dashboard.js')}}"></script>
+    </section>
+
+    <script src="{{ url_for('dashboard.static', filename='js/dashboard.js') }}"></script>
 {% endblock %}

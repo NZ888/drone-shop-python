@@ -1,22 +1,83 @@
-<div>
-    {% if adresses %}
-        {% for adress in adresses %}
-            <div>
-                <label>
-                    <input type="radio" name="is_selected" {% if adress.is_selected %}
-                        checked
-                    {% endif %}>
-                    {{adress.city}}, {{adress.streat}}, {{adress.house}}
+<section class="dashboard-panel delivery-panel">
+    <h2>Адреса доставки</h2>
+
+    <div class="delivery-list">
+        {% if adresses %}
+            {% for adress in adresses %}
+                <label class="delivery-saved-address {% if adress.is_selected %}selected{% endif %}" data-address-id="{{ adress.id }}">
+                    <input
+                        class="delivery-radio"
+                        type="radio"
+                        name="selected_delivery"
+                        data-select-url="/delivery-info/select/{{ adress.id }}/"
+                        data-id="{{ adress.id }}"
+                        data-city="{{ adress.city or '' }}"
+                        data-streat="{{ adress.streat or '' }}"
+                        data-house="{{ adress.house or '' }}"
+                        data-flat="{{ adress.flat or '' }}"
+                        data-block="{{ adress.block or '' }}"
+                        {% if adress.is_selected %}checked{% endif %}
+                    >
+                    <span>{{ adress.city }}, {{ adress.streat }}, {{ adress.house }}</span>
+                    <button
+                        class="edit-address-btn"
+                        type="button"
+                        aria-label="Редагувати адресу"
+                        data-id="{{ adress.id }}"
+                        data-city="{{ adress.city or '' }}"
+                        data-streat="{{ adress.streat or '' }}"
+                        data-house="{{ adress.house or '' }}"
+                        data-flat="{{ adress.flat or '' }}"
+                        data-block="{{ adress.block or '' }}"
+                    >✎</button>
+                    <button
+                        class="delete-address-btn"
+                        type="button"
+                        aria-label="Видалити адресу"
+                        data-delete-url="/delivery-info/delete/{{ adress.id }}/"
+                    >×</button>
                 </label>
+            {% endfor %}
+        {% else %}
+            <div class="empty-dashboard delivery-empty">
+                <p>Додайте першу адресу доставки.</p>
             </div>
-        {% endfor %}
-    {% endif %}
-    <form action="/delivery-info" method="post">
-        <input type="text" name="city">
-        <input type="text" name="streat">
-        <input type="text" name="house">
-        <input type="text" name="flat">
-        <input type="text" name="block">
-        <button type="submit">Зберегти зміни</button>
+        {% endif %}
+    </div>
+
+    <form class="dashboard-form delivery-form" action="/delivery-info/" method="post">
+        <input id="delivery_id" type="hidden" name="delivery_id" value="{{ adresses[0].id if adresses else '' }}">
+        <input id="delivery_selected" type="hidden" name="is_selected" value="{{ 1 if not adresses or adresses[0].is_selected else 0 }}">
+
+        <div class="form-row">
+            <label for="city">Місто</label>
+            <input id="city" type="text" name="city" placeholder="Дніпро" value="{{ adresses[0].city if adresses else '' }}">
+            <div class="city-links">Вінниця&nbsp;&nbsp; Одеса&nbsp;&nbsp; Харків&nbsp;&nbsp; Дніпро&nbsp;&nbsp; Київ&nbsp;&nbsp; Львів</div>
+        </div>
+
+        <div class="form-row">
+            <label for="streat">Вулиця</label>
+            <input id="streat" type="text" name="streat" placeholder="вул. Маршала Малиновського, 114" value="{{ adresses[0].streat if adresses else '' }}">
+        </div>
+
+        <div class="form-row">
+            <label for="house">Будинок</label>
+            <input id="house" type="text" name="house" placeholder="114" value="{{ adresses[0].house if adresses else '' }}">
+        </div>
+
+        <div class="form-row">
+            <label for="flat">Квартира</label>
+            <input id="flat" type="text" name="flat" placeholder="Номер квартири" value="{{ adresses[0].flat if adresses else '' }}">
+        </div>
+
+        <div class="form-row">
+            <label for="block">Під'їзд</label>
+            <input id="block" type="text" name="block" placeholder="Номер під'їзду" value="{{ adresses[0].block if adresses else '' }}">
+        </div>
+
+        <p class="dashboard-form-message" data-form-message></p>
+        <button class="outline-btn" type="submit">Зберегти зміни</button>
     </form>
-</div>
+
+    <button class="add-address-btn" type="button">+ Додати адресу</button>
+</section>

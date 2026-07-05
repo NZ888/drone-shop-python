@@ -1,37 +1,124 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Catalog
+    Каталог
 {% endblock %}
+
+{% block body_class %}catalog-page{% endblock %}
 
 {% block links %}
     <link rel="stylesheet" href="{{ url_for('catalog.static', filename='css/catalog.css') }}">
 {% endblock %}
 
-{% block content %}
+{% block header %}
+    <section class="catalog-top">
+        <h1>Каталог</h1>
 
-    {% if categories %}
-        <div class="categories-list">
-            <button class="category-btn active" data-category="all">
-                <span>Всі</span>
+        {% if current_user.is_authenticated and current_user.isAdmin %}
+            <button class="catalog-admin-btn" type="button" id="openAdminProductModal">
+                + Додати товар
             </button>
+        {% endif %}
+    </section>
+{% endblock %}
 
-            {% for category in categories %}
-                <button class="category-btn" data-category="{{ category }}">
-                    <img 
-                        src="{{ url_for('catalog.static', filename='media/categories/' ~ category ~ '.png') }}" 
-                        alt="{{ category }}"
-                    >
+{% block content %}
+    <section class="catalog-page-content">
+        {% if categories %}
+            <div class="categories-list">
+                <button class="category-btn active" data-category="all">
+                    <span>Всі</span>
                 </button>
-            {% endfor %}
+
+                {% for category in categories %}
+                    <button class="category-btn" data-category="{{ category }}">
+                        <img
+                            src="{{ url_for('catalog.static', filename='media/categories/' ~ category ~ '.png') }}"
+                            alt="{{ category }}"
+                        >
+                    </button>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div id="filter_products"></div>
+
+        <div id="pagination"></div>
+    </section>
+
+    {% if current_user.is_authenticated and current_user.isAdmin %}
+        <div class="admin-product-backdrop" id="adminProductBackdrop"></div>
+
+        <div class="admin-product-modal" id="adminProductModal" aria-hidden="true">
+            <div class="admin-product-modal-content">
+                <button class="admin-product-close" type="button" id="closeAdminProductModal" aria-label="Закрити">×</button>
+
+                <h2>Додати товар</h2>
+
+                <form action="/admin/create-product/" method="post" enctype="multipart/form-data">
+                    <div class="admin-product-grid">
+                        <label>
+                            Назва
+                            <input type="text" name="name" placeholder="DJI Mini 4K" required>
+                        </label>
+
+                        <label>
+                            Категорія
+                            <input type="text" name="category" placeholder="drone" required>
+                        </label>
+
+                        <label>
+                            Ціна
+                            <input type="number" name="price" placeholder="29900" required>
+                        </label>
+
+                        <label>
+                            Стара ціна
+                            <input type="number" name="old_price" placeholder="32000">
+                        </label>
+                    </div>
+
+                    <label>
+                        Фото товару
+                        <input type="file" name="image" accept="image/*" required>
+                    </label>
+
+                    <label>
+                        Опис
+                        <textarea name="description" placeholder="Короткий опис товару" required></textarea>
+                    </label>
+
+                    <h3>Інформаційні блоки</h3>
+
+                    {% for number in range(1, 4) %}
+                        <div class="admin-product-block">
+                            <input type="number" name="block_number" value="{{ number }}" placeholder="Порядок">
+                            <input type="text" name="block_title" placeholder="Назва блоку {{ number }}">
+                            <textarea name="block_description" placeholder="Опис блоку {{ number }}"></textarea>
+                            <input type="file" name="block_image" accept="image/*">
+                        </div>
+                    {% endfor %}
+
+                    <h3>Характеристики</h3>
+
+                    <input type="text" name="spec_title" placeholder="Назва секції характеристик">
+                    <textarea name="spec_description" placeholder="Опис характеристик"></textarea>
+                    <input type="file" name="spec_image" accept="image/*">
+
+                    <div class="admin-product-grid">
+                        <input type="text" name="spec_code" placeholder="Кодек, наприклад ALL-I 4:2:2">
+                        <input type="text" name="spec_ufs" placeholder="UFS, наприклад 512 GB">
+                        <input type="text" name="spec_emmc" placeholder="eMMC, наприклад 64 GB">
+                    </div>
+
+                    <button class="admin-product-submit" type="submit">Створити товар</button>
+                </form>
+            </div>
         </div>
+
+        <script src="{{ url_for('catalog.static', filename='js/adminProductModal.js') }}" defer></script>
     {% endif %}
-
-    <div id="filter_products"></div>
-
-    <div id="pagination"></div>
 
     <script src="{{ url_for('cart.static', filename='js/countProducts.js') }}" defer type="module"></script>
     <script src="{{ url_for('catalog.static', filename='js/filter.js') }}" defer type="module"></script>
-
 {% endblock %}

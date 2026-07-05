@@ -6,20 +6,34 @@ home.home.add_url_rule(
     view_func= home.render_home,
     methods=['GET', 'POST']
 )
+home.home.add_url_rule(
+    rule='/contacts/',
+    view_func=home.render_contacts,
+    methods=['GET', 'POST']
+)
+home.home.add_url_rule(
+    rule='/about/',
+    view_func=home.render_about,
+    methods=['GET', 'POST']
+)
 user.user.add_url_rule(
-    rule='/login/', 
-    view_func= user.render_login, 
+    rule='/login/',
+    view_func= user.render_login,
     methods=['GET', 'POST']
     )
 user.user.add_url_rule(
-    rule='/register/', 
-    view_func= user.render_register, 
+    rule='/register/',
+    view_func= user.render_register,
     methods=['GET', 'POST']
     )
 user.user.add_url_rule(
     rule="/verify_code/",
     view_func= user.render_verify,
     methods=['GET', 'POST']
+)
+user.user.add_url_rule(
+    rule="/logout/",
+    view_func=user.logout
 )
 catalog.catalog.add_url_rule(
     rule="/catalog/",
@@ -30,6 +44,11 @@ catalog.catalog.add_url_rule(
     rule="/admin/",
     view_func= catalog.render_admin,
     methods=['GET', 'POST']
+)
+catalog.catalog.add_url_rule(
+    rule="/admin/create-product/",
+    view_func=catalog.create_product,
+    methods=['POST']
 )
 catalog.catalog.add_url_rule(
     rule="/delete/",
@@ -64,6 +83,11 @@ catalog.catalog.add_url_rule(
     methods=['GET', 'POST']
 )
 catalog.catalog.add_url_rule(
+    rule="/product/<slug>/",
+    view_func= catalog.render_product_by_slug,
+    methods=['GET', 'POST']
+)
+catalog.catalog.add_url_rule(
     rule="/catalog/filter",
     view_func= catalog.filter_products,
     methods=['GET', 'POST']
@@ -87,6 +111,21 @@ dashboard.dashboard.add_url_rule(
     rule="/delivery-info/",
     view_func= dashboard.create_delivery,
     methods=['GET', 'POST']
+)
+dashboard.dashboard.add_url_rule(
+    rule="/delivery-info/select/<int:id>/",
+    view_func=dashboard.select_delivery,
+    methods=['POST']
+)
+dashboard.dashboard.add_url_rule(
+    rule="/delivery-info/delete/<int:id>/",
+    view_func=dashboard.delete_delivery,
+    methods=['POST']
+)
+dashboard.dashboard.add_url_rule(
+    rule="/dashboard/orders/cancel/<int:id>/",
+    view_func=dashboard.cancel_order,
+    methods=['POST']
 )
 dashboard.dashboard.add_url_rule(
     rule="/dashboard/",

@@ -1,14 +1,15 @@
 import { addToCart } from "../../../cart/static/js/countProducts.js"
 
-const addButton = document.querySelector(".addButton")
-const countProduct = document.querySelector(".renderCount")
+const cartButton = document.querySelector(".product-cart-btn")
 
-if (addButton) {
-    addButton.addEventListener("click", async () => {
-        const result = await addToCart(addButton.value)
+if (cartButton) {
+    cartButton.addEventListener("click", async () => {
+        await addToCart(cartButton.value)
 
-        if (countProduct) {
-            countProduct.textContent = result
+        if (window.loadCartModal) {
+            window.loadCartModal()
+        } else {
+            window.location.href = "/cart/"
         }
     })
 }

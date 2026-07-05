@@ -10,52 +10,72 @@ const cartDiv = document.getElementById("cart_div")
 
 
 function closeModal() {
+    if (!modalBg) {
+        return
+    }
+
     modalBg.classList.remove("active")
 
-    loginDiv.classList.remove("active")
-    registerDiv.classList.remove("active")
-    verifyDiv.classList.remove("active")
-    cartDiv.classList.remove("active")
+    loginDiv?.classList.remove("active")
+    registerDiv?.classList.remove("active")
+    verifyDiv?.classList.remove("active")
+    cartDiv?.classList.remove("active")
 }
 
 
 function showLogin() {
+    if (!modalBg || !loginDiv) {
+        return
+    }
+
     modalBg.classList.add("active")
 
     loginDiv.classList.add("active")
-    registerDiv.classList.remove("active")
-    verifyDiv.classList.remove("active")
-    cartDiv.classList.remove("active")
+    registerDiv?.classList.remove("active")
+    verifyDiv?.classList.remove("active")
+    cartDiv?.classList.remove("active")
 }
 
 
 function showRegister() {
+    if (!modalBg || !registerDiv) {
+        return
+    }
+
     modalBg.classList.add("active")
 
     registerDiv.classList.add("active")
-    loginDiv.classList.remove("active")
-    verifyDiv.classList.remove("active")
-    cartDiv.classList.remove("active")
+    loginDiv?.classList.remove("active")
+    verifyDiv?.classList.remove("active")
+    cartDiv?.classList.remove("active")
 }
 
 
 function showVerify() {
+    if (!modalBg || !verifyDiv) {
+        return
+    }
+
     modalBg.classList.add("active")
 
     verifyDiv.classList.add("active")
-    registerDiv.classList.remove("active")
-    loginDiv.classList.remove("active")
-    cartDiv.classList.remove("active")
+    registerDiv?.classList.remove("active")
+    loginDiv?.classList.remove("active")
+    cartDiv?.classList.remove("active")
 }
 
 
 function showCart() {
+    if (!modalBg || !cartDiv) {
+        return
+    }
+
     modalBg.classList.add("active")
 
     cartDiv.classList.add("active")
-    loginDiv.classList.remove("active")
-    registerDiv.classList.remove("active")
-    verifyDiv.classList.remove("active")
+    loginDiv?.classList.remove("active")
+    registerDiv?.classList.remove("active")
+    verifyDiv?.classList.remove("active")
 }
 
 
@@ -100,6 +120,9 @@ async function loadCartModal() {
     showCart()
     initCartModal()
 }
+
+
+window.loadCartModal = loadCartModal
 
 
 async function addToCartFromModal(idProduct) {

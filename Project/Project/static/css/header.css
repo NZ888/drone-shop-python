@@ -1,6 +1,13 @@
 body{
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #0C122A;
+}
+
+*{
+    box-sizing: border-box;
 }
 
 header{
@@ -15,8 +22,11 @@ header{
 }
 
 nav{
+    position: relative;
+    z-index: 20;
     display: flex;
     width: 90vw;
+    max-width: 1440px;
     height: 7vh;
     justify-content: space-between;
     background-color: #FFFFFF80;
@@ -45,6 +55,22 @@ nav{
     padding: 10px;
     align-items: center;
     justify-content: end;
+}
+.auth button{
+    display: flex;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.auth a,
+.auth button{
+    position: relative;
+}
+
+.auth img{
+    display: block;
 }
 .modal-bg {
     position: fixed;

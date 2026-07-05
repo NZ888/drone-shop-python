@@ -33,20 +33,23 @@ async function filterProducts(page) {
     let html = ``
 
     data.filtrated_products.forEach(product => {
+        const productUrl = product.slug ? `/product/${product.slug}/` : `/catalog/${product.id}/`
+        const oldPrice = product.old_price ? `${product.old_price} ₴` : ""
+        const oldPriceClass = product.old_price ? "old-price" : "old-price empty"
+
         html += `
             <div class="product">
-                <a href="/catalog/${product.id}" class="product_container">
-                    <img 
-                        style="max-height: 266px;" 
-                        src="/catalog/static/media/${product.image_url}" 
+                <a href="${productUrl}" class="product_container">
+                    <img
+                        src="/catalog/static/media/${product.image_url}"
                         alt="${product.name}"
                     >
 
                     <h1>${product.name}</h1>
 
                     <div class="price-container">
-                        <p class="old-price">${product.old_price}</p>
-                        <p class="price">${product.price}</p>
+                        <p class="${oldPriceClass}">${oldPrice}</p>
+                        <p class="price">${product.price} ₴</p>
                     </div>
                 </a>
             </div>
@@ -63,7 +66,7 @@ function renderPaginate(pagination) {
 
     if (pagination.has_prev) {
         paginationHtml += `
-            <button class="paginationBtn" value="${pagination.has_prev}">
+            <button class="paginationBtn" value="${pagination.prev_num}">
                 <img src="/catalog/static/images/prev.png" alt="prev">
             </button>
         `
@@ -79,7 +82,7 @@ function renderPaginate(pagination) {
 
     if (pagination.has_next) {
         paginationHtml += `
-            <button class="paginationBtn" value="${pagination.has_next}">
+            <button class="paginationBtn" value="${pagination.next_page}">
                 <img src="/catalog/static/images/next.png" alt="next">
             </button>
         `

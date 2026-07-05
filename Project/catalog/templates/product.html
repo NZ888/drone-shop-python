@@ -1,32 +1,166 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Product 
+    {{ product.name if product else 'Товар' }}
 {% endblock %}
+
+{% block body_class %}product-page{% endblock %}
 
 {% block links %}
-
+    <link rel="stylesheet" href="{{ url_for('catalog.static', filename='css/product.css') }}">
 {% endblock %}
 
+{% block header %}
+    {% if product %}
+        {% set product_image = url_for('catalog.static', filename='media/' + product.image_url) %}
+
+        <section class="product-hero">
+            <div class="product-hero-content">
+                <h1>{{ product.name }}</h1>
+                <p>{{ product.description }}</p>
+            </div>
+
+            <img class="product-hero-image" src="{{ product_image }}" alt="{{ product.name }}">
+
+            <div class="product-buy-card">
+                <div class="buy-card-product">
+                    <img src="{{ product_image }}" alt="{{ product.name }}">
+                    <strong>{{ product.name }}</strong>
+                </div>
+
+                <div class="buy-card-prices">
+                    {% if product.old_price %}
+                        <span class="buy-old-price">{{ product.old_price }} ₴</span>
+                    {% endif %}
+                    <span class="buy-price">{{ product.price }} ₴</span>
+                </div>
+
+                <div class="buy-card-actions">
+                    <button class="product-cart-btn" type="button" value="{{ product.id }}" aria-label="Додати в кошик">
+                        <img src="{{ url_for('static', filename='images/bag.png') }}" alt="">
+                    </button>
+                    <a class="product-order-btn" href="/order/?product_id={{ product.id }}">
+                        Замовити
+                        <span>→</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+{% endblock %}
 
 {% block content %}
     {% if product %}
-    <div>
-        <h2>{{product.name}}</h2>
-        <img src="{{url_for('catalog.static', filename='media/' + product.image_url) }}" alt="">
-    </div>
+        {% set product_image = url_for('catalog.static', filename='media/' + product.image_url) %}
+        {% set product_blocks = blocks|default([], true) %}
+        {% set product_specs = specifications|default(none, true) %}
+        {% set products_related = related_products|default([], true) %}
 
-        <button class="addButton" value="{{ product.id }}">
-            Add to cart
-        </button>
+        <section class="product-video-section">
+            <h2>Володійте кожним кутом</h2>
+            <p>
+                Представляємо вдосконалену систему з трьома камерами, де кожен об'єктив має свій
+                перевірений сценарій. Створюйте портрети, панорами й деталізовані кадри з легким керуванням.
+            </p>
 
-        <p>
-            В корзине этого товара:
-            <span class="renderCount">0</span>
-        </p>
-    </div>
-    {% else %}
-        <h2>Product not found</h2>
-    {% endif %}
+            <div class="product-video-preview">
+                <img src="{{ product_image }}" alt="{{ product.name }}">
+                <button type="button" aria-label="Переглянути відео">▶</button>
+            </div>
+        </section>
+
+        {% for block in product_blocks %}
+            <section class="product-info-block {% if loop.index is even %}product-info-reverse{% endif %}">
+                <div class="product-info-text">
+                    <h2>{{ block.title }}</h2>
+                    <p>{{ block.description }}</p>
+                </div>
+
+                <img
+                    src="{{ url_for('catalog.static', filename='media/' + block.image) if block.image else product_image }}"
+                    alt="{{ block.title }}"
+                >
+            </section>
+        {% else %}
+            <section class="product-info-block">
+                <div class="product-info-text">
+                    <h2>Основна камера 4/3 CMOS Hasselblad</h2>
+                    <p>
+                        Камера створена для деталізованих знімків з природними кольорами, чіткістю
+                        та широким динамічним діапазоном у складних умовах освітлення.
+                    </p>
+                </div>
+                <img src="{{ product_image }}" alt="{{ product.name }}">
+            </section>
+
+            <section class="product-info-block product-info-reverse">
+                <div class="product-info-text">
+                    <h2>51-хв час польоту</h2>
+                    <p>
+                        Тривалий час польоту дозволяє спокійно знімати маршрути, панорами та динамічні
+                        сцени без зайвого поспіху.
+                    </p>
+                </div>
+                <img src="{{ product_image }}" alt="{{ product.name }}">
+            </section>
+        {% endfor %}
+
+        <section class="product-spec-section">
+            <h2>{{ product_specs.title if product_specs else 'До 512 ГБ вбудованої памʼяті' }}</h2>
+            <p>
+                {{ product_specs.description if product_specs else 'Зберігайте матеріали без зовнішньої карти памʼяті та працюйте з великими відеофайлами одразу після зйомки.' }}
+            </p>
+
+            <div class="product-spec-grid">
+                <div>
+                    <strong>{{ product_specs.code if product_specs and product_specs.code else 'ALL-I 4:2:2' }}</strong>
+                    <span>Кодування</span>
+                </div>
+                <div>
+                    <strong>{{ product_specs.ufs if product_specs and product_specs.ufs else '512 GB' }}</strong>
+                    <span>UFS сховище</span>
+                </div>
+                <div>
+                    <strong>{{ product_specs.emmc if product_specs and product_specs.emmc else '64 GB' }}</strong>
+                    <span>eMMC Storage</span>
+                </div>
+            </div>
+
+            <img
+                src="{{ url_for('catalog.static', filename='media/' + product_specs.image) if product_specs and product_specs.image else product_image }}"
+                alt="{{ product_specs.title if product_specs else product.name }}"
+            >
+        </section>
+
+        <section class="related-products">
+            <h2>Схожі товари</h2>
+
+            <div class="related-products-grid">
+                {% for item in products_related %}
+                    <a href="{{ url_for('catalog.render_product_by_slug', slug=item.slug) if item.slug else '/catalog/' ~ item.id ~ '/' }}" class="related-product-card">
+                        <img src="{{ url_for('catalog.static', filename='media/' + item.image_url) }}" alt="{{ item.name }}">
+                        <h3>{{ item.name }}</h3>
+                        <div>
+                            {% if item.old_price %}
+                                <span>{{ item.old_price }} ₴</span>
+                            {% endif %}
+                            <strong>{{ item.price }} ₴</strong>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+
+            <a class="view-all-products" href="/catalog/">
+                Дивитись всі
+                <span>→</span>
+            </a>
+        </section>
+
         <script type="module" src="{{ url_for('catalog.static', filename='js/productCart.js') }}"></script>
+    {% else %}
+        <section class="product-not-found">
+            <h1>Товар не знайдено</h1>
+            <a href="/catalog/">Повернутися до каталогу</a>
+        </section>
+    {% endif %}
 {% endblock %}
