@@ -33,7 +33,6 @@ Main technologies used in the project:
 - **Requests** - used for external API calls in the order flow.
 - **HTML, CSS, JavaScript** - frontend pages, modals, catalog filtering, cart actions and dashboard interactions.
 
-
 ### 4. How to Run the Project
 
 1. Clone or open the project folder.
@@ -107,6 +106,7 @@ drone-shop/
 │   ├── order/
 │   ├── dashboard/
 │   └── user/
+├── screenshots/
 ├── requirements.txt
 └── README.md
 ```
@@ -122,14 +122,19 @@ Main project parts:
 - **dashboard** - user account page with contact data, delivery addresses and user orders.
 - **user** - login, registration, logout and email verification.
 
-```markdown
+#### Screenshots
+
 ![Main page screenshot](./screenshots/main_page.png)
+
 ![Catalog screenshot](./screenshots/catalog_page.png)
+
 ![Cart screenshot](./screenshots/cart_modal.png)
+
 ![Authentication screenshot](./screenshots/auth_modal.png)
+
 ![Dashboard screenshot](./screenshots/dashboard.png)
+
 ![Order screenshot](./screenshots/order_page.png)
-```
 
 ### 6. Conclusion
 
@@ -247,6 +252,7 @@ drone-shop/
 │   ├── order/
 │   ├── dashboard/
 │   └── user/
+├── screenshots/
 ├── requirements.txt
 └── README.md
 ```
@@ -262,18 +268,22 @@ drone-shop/
 - **dashboard** - особистий кабінет користувача з контактними даними, адресами доставки та замовленнями.
 - **user** - вхід, реєстрація, вихід і підтвердження email-кодом.
 
+#### Скриншоти
 
-```markdown
-![Скриншот гловної сторінки](./screenshots/main_page.png)
+![Скриншот головної сторінки](./screenshots/main_page.png)
+
 ![Скриншот сторінки каталогу](./screenshots/catalog_page.png)
+
 ![Скриншот кошика](./screenshots/cart_modal.png)
+
 ![Скриншот аутентифікації](./screenshots/auth_modal.png)
-![Скриншот кабінету ](./screenshots/dashboard.png)
+
+![Скриншот кабінету](./screenshots/dashboard.png)
+
 ![Скриншот замовлення](./screenshots/order_page.png)
-```
 
 ### 6. Висновок по роботі
 
-Цей проєкт був корисний як практика створення Flask додатку, у якому є кілька сторінок, база даних, користувачі, кошик і замовлення. Під час роботи можна було навчитися краще розділяти код на модулі, працювати з моделями, шаблонами, формами та простими AJAX-запитами.
+Цей проєкт був корисний як практика створення Flask-додатку, у якому є кілька сторінок, база даних, користувачі, кошик і замовлення. Під час роботи можна було навчитися краще розділяти код на модулі, працювати з моделями, шаблонами, формами та простими AJAX-запитами.
 
 У майбутньому проєкт можна розвивати: покращити валідацію форм, зробити зручніше керування товарами.
